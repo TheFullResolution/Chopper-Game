@@ -15,7 +15,7 @@ include_directories(
 )
 add_compile_options(-Wall -Wextra -Wpedantic)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../bin)
-add_executable(ChopperGame main.cpp src/Game.cpp src/Game.h src/_constants.h)
+add_executable(ChopperGame src/main.cpp src/Game.cpp src/Game.h src/_constants.h)
 
 target_link_libraries(
         ChopperGame
