@@ -15,7 +15,11 @@ private:
 
 public:
   Game();
-  [[nodiscard]] bool IsRunning() const;
+  void Run();
+  static SDL_Event event;
+  void Destroy();
+  void ProcessInput();
+  void UpdateWindowTitle(int fps);
 };
 
 #endif // CHOPPERGAME_GAME_H
