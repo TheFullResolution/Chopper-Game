@@ -1,0 +1,9 @@
+{
+  "map": {
+    "file": "assets/map/jungle.map",
+    "scale": 2,
+    "tileSize": 32,
+    "mapSizeX": 25,
+    "mapSizeY": 20
+  }
+}

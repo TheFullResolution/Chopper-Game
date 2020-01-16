@@ -5,7 +5,11 @@
 #include "Game.h"
 #include "_constants.h"
 #include <SDL_ttf.h>
+#include <boost/property_tree/json_parser.hpp>
+#include <boost/property_tree/ptree.hpp>
 #include <iostream>
+
+namespace pt = boost::property_tree;
 
 SDL_Event Game::event;
 
@@ -21,7 +25,7 @@ Game::Game() {
 
   window = SDL_CreateWindow(constants::title.data(), SDL_WINDOWPOS_UNDEFINED,
                             SDL_WINDOWPOS_UNDEFINED, constants::WINDOW_WIDTH,
-                            constants::WINDOW_HEIGHT, SDL_WINDOW_RESIZABLE );
+                            constants::WINDOW_HEIGHT, SDL_WINDOW_RESIZABLE);
   if (!window) {
     std::cerr << "Error creating SDL window." << std::endl;
     return;
@@ -43,13 +47,16 @@ void Game::Run() {
   Uint32 frame_duration;
   int frame_count = 0;
 
+  pt::ptree config;
+  std::ifstream jsonFile("../assets/config.json");
+  pt::read_json(jsonFile, config);
+  auto name = config.get<std::string>("map.file");
+
   while (isRunning) {
     frame_start = SDL_GetTicks();
     ProcessInput();
 
-    for (int i = 0; i < 20; ++i) {
-      std::cout << "This machine run loop nr" << i << std::endl;
-    }
+    std::cout << "This machine " << name << std::endl;
 
     frame_end = SDL_GetTicks();
     frame_duration = frame_end - frame_start;
@@ -92,7 +99,6 @@ void Game::ProcessInput() {
   }
   }
 }
-
 
 void Game::Destroy() {
   SDL_DestroyRenderer(renderer);
