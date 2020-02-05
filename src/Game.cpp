@@ -3,6 +3,7 @@
 //
 
 #include "Game.h"
+#include "SDL_Instances.h"
 #include "_constants.h"
 #include <SDL_ttf.h>
 #include <boost/property_tree/json_parser.hpp>
@@ -11,9 +12,9 @@
 
 namespace pt = boost::property_tree;
 
-SDL_Event Game::event;
-
 Game::Game() {
+  isRunning = false;
+
   if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
     std::cerr << "Error initializing SDL." << std::endl;
     return;
@@ -23,16 +24,16 @@ Game::Game() {
     return;
   }
 
-  window = SDL_CreateWindow(constants::title.data(), SDL_WINDOWPOS_UNDEFINED,
-                            SDL_WINDOWPOS_UNDEFINED, constants::WINDOW_WIDTH,
-                            constants::WINDOW_HEIGHT, SDL_WINDOW_RESIZABLE);
-  if (!window) {
+  SDL_Instances::window = SDL_CreateWindow(
+      consts::title.data(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+      consts::WINDOW_WIDTH, consts::WINDOW_HEIGHT, SDL_WINDOW_RESIZABLE);
+  if (!SDL_Instances::window) {
     std::cerr << "Error creating SDL window." << std::endl;
     return;
   }
-  renderer = SDL_CreateRenderer(window, -1, 0);
+  SDL_Instances::renderer = SDL_CreateRenderer(SDL_Instances::window, -1, 0);
 
-  if (!renderer) {
+  if (!SDL_Instances::renderer) {
     std::cerr << "Error creating SDL renderer." << std::endl;
     return;
   }
@@ -48,7 +49,7 @@ void Game::Run() {
   int frame_count = 0;
 
   pt::ptree config;
-  std::ifstream jsonFile("../assets/config.json");
+  std::ifstream jsonFile("assets/config.json");
   pt::read_json(jsonFile, config);
   auto name = config.get<std::string>("map.file");
 
@@ -68,29 +69,29 @@ void Game::Run() {
       title_timestamp = frame_end;
     }
 
-    if (frame_duration < constants::FRAME_TARGET_TIME) {
-      SDL_Delay(constants::FRAME_TARGET_TIME - frame_duration);
+    if (frame_duration < consts::FRAME_TARGET_TIME) {
+      SDL_Delay(consts::FRAME_TARGET_TIME - frame_duration);
     }
   }
   Destroy();
 }
 
 void Game::UpdateWindowTitle(int fps) {
-  std::string title{constants::title + "; FPS: " + std::to_string(fps)};
-  SDL_SetWindowTitle(window, title.data());
+  std::string title{consts::title + "; FPS: " + std::to_string(fps)};
+  SDL_SetWindowTitle(SDL_Instances::window, title.data());
 }
 
 void Game::ProcessInput() {
 
-  SDL_PollEvent(&event);
+  SDL_PollEvent(&SDL_Instances::event);
 
-  switch (event.type) {
+  switch (SDL_Instances::event.type) {
   case SDL_QUIT: {
     isRunning = false;
     break;
   }
   case SDL_KEYDOWN: {
-    if (event.key.keysym.sym == SDLK_ESCAPE) {
+    if (SDL_Instances::event.key.keysym.sym == SDLK_ESCAPE) {
       isRunning = false;
     }
   }
@@ -101,7 +102,8 @@ void Game::ProcessInput() {
 }
 
 void Game::Destroy() {
-  SDL_DestroyRenderer(renderer);
-  SDL_DestroyWindow(window);
+  SDL_DestroyRenderer(SDL_Instances::renderer);
+  SDL_DestroyWindow(SDL_Instances::window);
   SDL_Quit();
 }
+void Game::Render() {}

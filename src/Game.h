@@ -10,16 +10,14 @@
 class Game {
 private:
   bool isRunning;
-  SDL_Window *window;
-  SDL_Renderer *renderer;
 
 public:
   Game();
   void Run();
-  static SDL_Event event;
   void Destroy();
   void ProcessInput();
-  void UpdateWindowTitle(int fps);
+  static void UpdateWindowTitle(int fps);
+  void Render();
 };
 
 #endif // CHOPPERGAME_GAME_H
