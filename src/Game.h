@@ -5,6 +5,7 @@
 #ifndef CHOPPERGAME_GAME_H
 #define CHOPPERGAME_GAME_H
 
+#include "components/Map/Map.h"
 #include <SDL.h>
 
 class Game {
@@ -14,10 +15,11 @@ private:
 public:
   Game();
   void Run();
-  void Destroy();
+  static void Destroy();
   void ProcessInput();
   static void UpdateWindowTitle(int fps);
-  void Render();
+  static void Render();
+  static void LoadLevel();
 };
 
 #endif // CHOPPERGAME_GAME_H

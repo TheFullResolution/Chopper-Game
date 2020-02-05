@@ -3,16 +3,20 @@
 //
 
 #include "Map.h"
+#include "../TextureManager/TextureManager.h"
 #include <fstream>
-#include <utility>
+#include <iostream>
 
-Map::Map(std::string textureId, int scale, int tileSize) {
-  this->textureId = std::move(textureId);
-  this->scale = scale;
-  this->tileSize = tileSize;
+Map::Map(const std::string& mapImageFile, const std::string& mapLayoutFile, int scale,
+         int tileSize, int mapSizeX, int mapSizeY)
+    : scale(scale), tileSize(tileSize) {
+
+  texture = TextureManager::LoadTexture(mapImageFile.c_str());
+
+  LoadMap(mapLayoutFile, mapSizeX, mapSizeY);
 }
 
-void Map::LoadMap(const std::string& filePath, int mapSizeX, int mapSizeY) {
+void Map::LoadMap(const std::string &filePath, int mapSizeX, int mapSizeY) {
   std::fstream mapFile;
   mapFile.open(filePath);
 
@@ -23,8 +27,10 @@ void Map::LoadMap(const std::string& filePath, int mapSizeX, int mapSizeY) {
       int sourceRectY = atoi(&ch) * tileSize;
       mapFile.get(ch);
       int sourceRectX = atoi(&ch) * tileSize;
-      AddTile(sourceRectX, sourceRectY, x * (scale * tileSize),
-              y * (scale * tileSize));
+      int xpos{x * (scale * tileSize)};
+      int ypos{y * (scale * tileSize)};
+
+      AddTile(sourceRectX, sourceRectY, xpos, ypos);
       mapFile.ignore();
     }
   }
@@ -32,4 +38,12 @@ void Map::LoadMap(const std::string& filePath, int mapSizeX, int mapSizeY) {
 }
 
 void Map::AddTile(int sourceRectX, int sourceRectY, int x, int y) {
+  tiles.emplace_back(new Tile(sourceRectX, sourceRectY, x, y, tileSize, scale));
 }
+
+void Map::Render() {
+  for (auto &tile : tiles) {
+    tile -> Render(texture);
+  }
+}
+

@@ -5,18 +5,22 @@
 #ifndef CHOPPERGAME_MAP_H
 #define CHOPPERGAME_MAP_H
 
+#include "../Tile/Tile.h"
 #include <string>
+#include <vector>
 
 class Map {
 public:
-  Map(std::string textureId, int scale, int tileSize);
-
-  void LoadMap(const std::string& filePath, int mapSizeX, int MapSizeY);
-
-  void AddTile(int sourceX, int sourceY, int x, int y);
+  Map(const std::string& mapImageFile, const std::string& mapLayoutFile, int scale,
+      int tileSize, int mapSizeX, int mapSizeY);
+  void Render();
 
 private:
-  std::string textureId;
+  void AddTile(int sourceX, int sourceY, int x, int y);
+  void LoadMap(const std::string &filePath, int mapSizeX, int MapSizeY);
+
+  SDL_Texture *texture;
+  std::vector<Tile *> tiles;
   int scale;
   int tileSize;
 };

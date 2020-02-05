@@ -2,7 +2,7 @@
 // Created by Jedrzej Lewandowski on 05/02/2020.
 //
 #include "TextureManager.h"
-#include "../../SDL_Instances.h"
+#include "../../_sdl_instances.h"
 #include <SDL_image.h>
 
 SDL_Texture *TextureManager::LoadTexture(const char *filename) {

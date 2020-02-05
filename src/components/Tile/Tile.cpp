@@ -5,9 +5,8 @@
 #include "Tile.h"
 #include "../TextureManager/TextureManager.h"
 
-Tile::Tile(SDL_Texture *texture, int sourceRectX, int sourceRectY, int x, int y,
-           int tileSize, int tileScale)
-    : texture(texture) {
+Tile::Tile(int sourceRectX, int sourceRectY, int x, int y, int tileSize,
+           int tileScale) {
   sourceRectangle.x = sourceRectX;
   sourceRectangle.y = sourceRectY;
   sourceRectangle.h = tileSize;
@@ -22,9 +21,7 @@ Tile::Tile(SDL_Texture *texture, int sourceRectX, int sourceRectY, int x, int y,
   position.y = y;
 }
 
-Tile::~Tile() { SDL_DestroyTexture(texture); }
-
-void Tile::Render() {
+void Tile::Render(SDL_Texture *texture) {
   TextureManager::Draw(texture, sourceRectangle, destinationRectangle,
                        SDL_FLIP_NONE);
 }

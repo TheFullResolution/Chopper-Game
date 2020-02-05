@@ -3,14 +3,15 @@
 //
 
 #include "Game.h"
-#include "SDL_Instances.h"
-#include "_constants.h"
+#include "_consts.h"
+#include "_sdl_instances.h"
 #include <SDL_ttf.h>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <iostream>
 
 namespace pt = boost::property_tree;
+Map *map;
 
 Game::Game() {
   isRunning = false;
@@ -37,6 +38,23 @@ Game::Game() {
     std::cerr << "Error creating SDL renderer." << std::endl;
     return;
   }
+
+  LoadLevel();
+}
+
+void Game::LoadLevel() {
+  pt::ptree config;
+  std::ifstream jsonFile("assets/config.json");
+  pt::read_json(jsonFile, config);
+  auto mapLayoutFile = config.get<std::string>("map.mapLayoutFile");
+  auto mapImageFile = config.get<std::string>("map.mapImageFile");
+  auto scale = config.get<int>("map.scale");
+  auto tileSize = config.get<int>("map.tileSize");
+  auto mapSizeX = config.get<int>("map.mapSizeX");
+  auto mapSizeY = config.get<int>("map.mapSizeY");
+
+  map =
+      new Map(mapImageFile, mapLayoutFile, scale, tileSize, mapSizeX, mapSizeY);
 }
 
 void Game::Run() {
@@ -48,17 +66,10 @@ void Game::Run() {
   Uint32 frame_duration;
   int frame_count = 0;
 
-  pt::ptree config;
-  std::ifstream jsonFile("assets/config.json");
-  pt::read_json(jsonFile, config);
-  auto name = config.get<std::string>("map.file");
-
   while (isRunning) {
     frame_start = SDL_GetTicks();
     ProcessInput();
-
-    std::cout << "This machine " << name << std::endl;
-
+    Render();
     frame_end = SDL_GetTicks();
     frame_duration = frame_end - frame_start;
     frame_count++;
@@ -106,4 +117,12 @@ void Game::Destroy() {
   SDL_DestroyWindow(SDL_Instances::window);
   SDL_Quit();
 }
-void Game::Render() {}
+
+void Game::Render() {
+
+  SDL_SetRenderDrawColor(SDL_Instances::renderer, 158, 200, 92, 255);
+  SDL_RenderClear(SDL_Instances::renderer);
+  map->Render();
+
+  SDL_RenderPresent(SDL_Instances::renderer);
+}

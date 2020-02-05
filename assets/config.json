@@ -1,7 +1,8 @@
 {
   "map": {
-    "file": "assets/map/jungle.map",
-    "scale": 2,
+    "mapLayoutFile": "assets/map/jungle.map",
+    "mapImageFile": "assets/map/jungle.map",
+    "scale": 1,
     "tileSize": 32,
     "mapSizeX": 25,
     "mapSizeY": 20
