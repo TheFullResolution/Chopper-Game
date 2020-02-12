@@ -11,6 +11,7 @@
 class Game {
 private:
   bool isRunning;
+  static SDL_Window *sdl_window;
 
 public:
   Game();
@@ -20,6 +21,9 @@ public:
   static void UpdateWindowTitle(int fps);
   static void Render();
   static void LoadLevel();
+
+  static SDL_Renderer *sdl_renderer;
+  static SDL_Event event;
 };
 
 #endif // CHOPPERGAME_GAME_H

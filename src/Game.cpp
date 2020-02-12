@@ -4,14 +4,17 @@
 
 #include "Game.h"
 #include "_consts.h"
-#include "_sdl_instances.h"
 #include <SDL_ttf.h>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <iostream>
 
 namespace pt = boost::property_tree;
+
 Map *map;
+SDL_Renderer *Game::sdl_renderer;
+SDL_Window *Game::sdl_window;
+SDL_Event Game::event;
 
 Game::Game() {
   isRunning = false;
@@ -25,16 +28,15 @@ Game::Game() {
     return;
   }
 
-  SDL_Instances::window = SDL_CreateWindow(
+  sdl_window = SDL_CreateWindow(
       consts::title.data(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
       consts::WINDOW_WIDTH, consts::WINDOW_HEIGHT, SDL_WINDOW_RESIZABLE);
-  if (!SDL_Instances::window) {
+  if (nullptr == sdl_window) {
     std::cerr << "Error creating SDL window." << std::endl;
     return;
   }
-  SDL_Instances::renderer = SDL_CreateRenderer(SDL_Instances::window, -1, 0);
-
-  if (!SDL_Instances::renderer) {
+  sdl_renderer = SDL_CreateRenderer(sdl_window, -1, SDL_RENDERER_ACCELERATED);
+  if (nullptr == sdl_renderer) {
     std::cerr << "Error creating SDL renderer." << std::endl;
     return;
   }
@@ -89,20 +91,20 @@ void Game::Run() {
 
 void Game::UpdateWindowTitle(int fps) {
   std::string title{consts::title + "; FPS: " + std::to_string(fps)};
-  SDL_SetWindowTitle(SDL_Instances::window, title.data());
+  SDL_SetWindowTitle(sdl_window, title.data());
 }
 
 void Game::ProcessInput() {
 
-  SDL_PollEvent(&SDL_Instances::event);
+  SDL_PollEvent(&event);
 
-  switch (SDL_Instances::event.type) {
+  switch (event.type) {
   case SDL_QUIT: {
     isRunning = false;
     break;
   }
   case SDL_KEYDOWN: {
-    if (SDL_Instances::event.key.keysym.sym == SDLK_ESCAPE) {
+    if (event.key.keysym.sym == SDLK_ESCAPE) {
       isRunning = false;
     }
   }
@@ -113,16 +115,16 @@ void Game::ProcessInput() {
 }
 
 void Game::Destroy() {
-  SDL_DestroyRenderer(SDL_Instances::renderer);
-  SDL_DestroyWindow(SDL_Instances::window);
+  SDL_DestroyRenderer(sdl_renderer);
+  SDL_DestroyWindow(sdl_window);
   SDL_Quit();
 }
 
 void Game::Render() {
 
-  SDL_SetRenderDrawColor(SDL_Instances::renderer, 158, 200, 92, 255);
-  SDL_RenderClear(SDL_Instances::renderer);
+  SDL_SetRenderDrawColor(sdl_renderer, 158, 200, 92, 255);
+  SDL_RenderClear(sdl_renderer);
   map->Render();
 
-  SDL_RenderPresent(SDL_Instances::renderer);
+  SDL_RenderPresent(sdl_renderer);
 }
