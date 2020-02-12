@@ -8,18 +8,21 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake")
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_ttf REQUIRED)
+find_package(Boost REQUIRED)
 include_directories(
         ${SDL2_INCLUDE_DIR}
         ${SDL2_IMAGE_INCLUDE_DIR}
         ${SDL2_TTF_INCLUDE_DIR}
+        ${Boost_INCLUDE_DIRS}
 )
 add_compile_options(-Wall -Wextra -Wpedantic)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../bin)
-add_executable(ChopperGame src/main.cpp src/Game.cpp src/Game.h src/_constants.h)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../.)
+add_executable(ChopperGame src/main.cpp src/Game.cpp src/Game.h src/_consts.h src/components/Map/Map.cpp src/components/Map/Map.h src/components/Tile/Tile.cpp src/components/Tile/Tile.h src/components/TextureManager/TextureManager.cpp src/components/TextureManager/TextureManager.h src/_sdl_instances.h src/_stucts.h)
 
 target_link_libraries(
         ChopperGame
         ${SDL2_LIBRARY}
         ${SDL2_IMAGE_LIBRARIES}
         ${SDL2_TTF_LIBRARIES}
+        ${Boost_LIBRARIES}
 )

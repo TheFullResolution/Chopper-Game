@@ -5,21 +5,25 @@
 #ifndef CHOPPERGAME_GAME_H
 #define CHOPPERGAME_GAME_H
 
+#include "components/Map/Map.h"
 #include <SDL.h>
 
 class Game {
 private:
   bool isRunning;
-  SDL_Window *window;
-  SDL_Renderer *renderer;
+  static SDL_Window *sdl_window;
 
 public:
   Game();
   void Run();
-  static SDL_Event event;
-  void Destroy();
+  static void Destroy();
   void ProcessInput();
-  void UpdateWindowTitle(int fps);
+  static void UpdateWindowTitle(int fps);
+  static void Render();
+  static void LoadLevel();
+
+  static SDL_Renderer *sdl_renderer;
+  static SDL_Event event;
 };
 
 #endif // CHOPPERGAME_GAME_H
