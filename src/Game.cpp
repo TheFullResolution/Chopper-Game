@@ -4,6 +4,7 @@
 
 #include "Game.h"
 #include "_consts.h"
+#include "components/Decoration/Decoration.h"
 #include <SDL_ttf.h>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -15,6 +16,7 @@ Map *map;
 SDL_Renderer *Game::sdl_renderer;
 SDL_Window *Game::sdl_window;
 SDL_Event Game::event;
+Decoration *decoration;
 
 Game::Game() {
   isRunning = false;
@@ -57,6 +59,14 @@ void Game::LoadLevel() {
 
   map =
       new Map(mapImageFile, mapLayoutFile, scale, tileSize, mapSizeX, mapSizeY);
+
+  auto decorationFile = config.get<std::string>("decorations.1.file");
+  auto width = config.get<int>("decorations.1.width");
+  auto height = config.get<int>("decorations.1.height");
+  auto x = config.get<int>("decorations.1.x");
+  auto y = config.get<int>("decorations.1.y");
+
+  decoration = new Decoration(decorationFile, width, height, x, y );
 }
 
 void Game::Run() {
@@ -125,6 +135,7 @@ void Game::Render() {
   SDL_SetRenderDrawColor(sdl_renderer, 158, 200, 92, 255);
   SDL_RenderClear(sdl_renderer);
   map->Render();
+  decoration->Render();
 
   SDL_RenderPresent(sdl_renderer);
 }

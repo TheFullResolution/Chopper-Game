@@ -17,7 +17,7 @@ include_directories(
 )
 add_compile_options(-Wall -Wextra -Wpedantic)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../.)
-add_executable(ChopperGame src/main.cpp src/Game.cpp src/Game.h src/_consts.h src/components/Map/Map.cpp src/components/Map/Map.h src/components/Tile/Tile.cpp src/components/Tile/Tile.h src/components/TextureManager/TextureManager.cpp src/components/TextureManager/TextureManager.h src/_sdl_instances.h src/_stucts.h)
+add_executable(ChopperGame src/main.cpp src/Game.cpp src/Game.h src/_consts.h src/components/Map/Map.cpp src/components/Map/Map.h src/components/Tile/Tile.cpp src/components/Tile/Tile.h src/components/TextureManager/TextureManager.cpp src/components/TextureManager/TextureManager.h src/_stucts.h src/components/Decoration/Decoration.cpp src/components/Decoration/Decoration.h src/components/Sprite/Sprite.cpp src/components/Sprite/Sprite.h)
 
 target_link_libraries(
         ChopperGame

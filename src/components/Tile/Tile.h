@@ -17,7 +17,6 @@ public:
 
   SDL_Rect sourceRectangle;
   SDL_Rect destinationRectangle;
-  vector position;
 };
 
 #endif // CHOPPERGAME_TILE_H
