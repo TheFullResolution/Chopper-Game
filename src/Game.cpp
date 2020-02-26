@@ -3,6 +3,7 @@
 //
 
 #include "Game.h"
+#include "Config.h"
 #include "_consts.h"
 #include "components/Decoration/Decoration.h"
 #include <SDL_ttf.h>
@@ -30,9 +31,9 @@ Game::Game() {
     return;
   }
 
-  sdl_window = SDL_CreateWindow(
-      consts::title.data(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-      consts::WINDOW_WIDTH, consts::WINDOW_HEIGHT, SDL_WINDOW_RESIZABLE);
+  sdl_window = SDL_CreateWindow(consts::title.data(), SDL_WINDOWPOS_UNDEFINED,
+                                SDL_WINDOWPOS_UNDEFINED, consts::WINDOW_WIDTH,
+                                consts::WINDOW_HEIGHT, SDL_WINDOW_RESIZABLE);
   if (nullptr == sdl_window) {
     std::cerr << "Error creating SDL window." << std::endl;
     return;
@@ -47,26 +48,18 @@ Game::Game() {
 }
 
 void Game::LoadLevel() {
-  pt::ptree config;
-  std::ifstream jsonFile("assets/config.json");
-  pt::read_json(jsonFile, config);
-  auto mapLayoutFile = config.get<std::string>("map.mapLayoutFile");
-  auto mapImageFile = config.get<std::string>("map.mapImageFile");
-  auto scale = config.get<int>("map.scale");
-  auto tileSize = config.get<int>("map.tileSize");
-  auto mapSizeX = config.get<int>("map.mapSizeX");
-  auto mapSizeY = config.get<int>("map.mapSizeY");
 
-  map =
-      new Map(mapImageFile, mapLayoutFile, scale, tileSize, mapSizeX, mapSizeY);
+  std::ifstream config_json("assets/config.json");
 
-  auto decorationFile = config.get<std::string>("decorations.1.file");
-  auto width = config.get<int>("decorations.1.width");
-  auto height = config.get<int>("decorations.1.height");
-  auto x = config.get<int>("decorations.1.x");
-  auto y = config.get<int>("decorations.1.y");
+  quicktype::Config config = nlohmann::json::parse(config_json);
 
-  decoration = new Decoration(decorationFile, width, height, x, y );
+  auto [map_image_file, map_layout_file, scale, tile_size, map_size_x,
+        map_size_y] = config.map;
+
+  map = new Map(map_image_file, map_layout_file, scale, tile_size, map_size_x,
+                map_size_y);
+
+  //  decoration = new Decoration(decorationFile, width, height, x, y);
 }
 
 void Game::Run() {
@@ -135,7 +128,7 @@ void Game::Render() {
   SDL_SetRenderDrawColor(sdl_renderer, 158, 200, 92, 255);
   SDL_RenderClear(sdl_renderer);
   map->Render();
-  decoration->Render();
+//  decoration->Render();
 
   SDL_RenderPresent(sdl_renderer);
 }
