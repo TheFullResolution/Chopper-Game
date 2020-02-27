@@ -9,6 +9,13 @@
     "mapSizeX":25,
     "mapSizeY":20
   },
+  "player": {
+    "file":"chopper-spritesheet.png",
+    "width":32,
+    "height":32,
+    "x":240,
+    "y":106
+  },
   "decorations":[
     {
       "file":"tree-small-6.png",

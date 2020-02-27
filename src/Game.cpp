@@ -6,11 +6,13 @@
 #include "Config.h"
 #include "_consts.h"
 #include "components/Decoration/Decoration.h"
+#include "components/Player/Player.h"
 #include <SDL_ttf.h>
 #include <boost/property_tree/json_parser.hpp>
 #include <iostream>
 
 Map *map;
+Player *player;
 SDL_Renderer *Game::sdl_renderer;
 SDL_Window *Game::sdl_window;
 SDL_Event Game::event;
@@ -65,6 +67,11 @@ void Game::LoadLevel() {
 
     decorations.emplace_back(decoration);
   }
+
+  auto [file, width, height, x, y] = config.player;
+
+  player = new Player(basePath + file, width, height, x, y);
+
 }
 
 void Game::Run() {
@@ -137,6 +144,8 @@ void Game::Render() {
   for (auto &decoration : decorations) {
     decoration.Render();
   }
+
+  player->Render();
 
   SDL_RenderPresent(sdl_renderer);
 }
