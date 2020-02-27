@@ -4,7 +4,7 @@
 
 #pragma once
 
-struct vector {
+struct vector_struct {
   int x;
   int y;
 };

@@ -16,9 +16,6 @@ Tile::Tile(int sourceRectX, int sourceRectY, int x, int y, int tileSize,
   destinationRectangle.y = y;
   destinationRectangle.w = tileScale * tileSize;
   destinationRectangle.h = tileScale * tileSize;
-
-  position.x = x;
-  position.y = y;
 }
 
 void Tile::Render(SDL_Texture *texture) {

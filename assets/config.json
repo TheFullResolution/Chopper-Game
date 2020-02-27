@@ -1,10 +1,28 @@
 {
-  "map": {
-    "mapLayoutFile": "assets/map/jungle.map",
-    "mapImageFile": "assets/map/jungle.png",
-    "scale": 1,
-    "tileSize": 32,
-    "mapSizeX": 25,
-    "mapSizeY": 20
-  }
+  "assetsPath":"assets/",
+  "spritePath":"images/",
+  "map":{
+    "mapImageFile":"assets/map/jungle.png",
+    "mapLayoutFile":"assets/map/jungle.map",
+    "scale":1,
+    "tileSize":32,
+    "mapSizeX":25,
+    "mapSizeY":20
+  },
+  "decorations":[
+    {
+      "file":"tree-small-6.png",
+      "width":16,
+      "height":32,
+      "x":700,
+      "y":380
+    },
+    {
+      "file":"tree-small-4.png",
+      "width":16,
+      "height":32,
+      "x":310,
+      "y":490
+    }
+  ]
 }
