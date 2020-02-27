@@ -7,8 +7,8 @@
 #include <fstream>
 #include <iostream>
 
-Map::Map(const std::string& mapImageFile, const std::string& mapLayoutFile, int scale,
-         int tileSize, int mapSizeX, int mapSizeY)
+Map::Map(const std::string &mapImageFile, const std::string &mapLayoutFile,
+         int scale, int tileSize, int mapSizeX, int mapSizeY)
     : scale(scale), tileSize(tileSize) {
 
   texture = TextureManager::LoadTexture(mapImageFile.c_str());
@@ -43,7 +43,6 @@ void Map::AddTile(int sourceRectX, int sourceRectY, int x, int y) {
 
 void Map::Render() {
   for (auto &tile : tiles) {
-    tile -> Render(texture);
+    tile->Render(texture);
   }
 }
-

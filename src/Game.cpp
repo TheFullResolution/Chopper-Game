@@ -8,16 +8,13 @@
 #include "components/Decoration/Decoration.h"
 #include <SDL_ttf.h>
 #include <boost/property_tree/json_parser.hpp>
-#include <boost/property_tree/ptree.hpp>
 #include <iostream>
-
-namespace pt = boost::property_tree;
 
 Map *map;
 SDL_Renderer *Game::sdl_renderer;
 SDL_Window *Game::sdl_window;
 SDL_Event Game::event;
-Decoration *decoration;
+std::vector<Decoration> decorations;
 
 Game::Game() {
   isRunning = false;
@@ -59,7 +56,15 @@ void Game::LoadLevel() {
   map = new Map(map_image_file, map_layout_file, scale, tile_size, map_size_x,
                 map_size_y);
 
-  //  decoration = new Decoration(decorationFile, width, height, x, y);
+  std::string basePath = config.assets_path + config.sprite_path;
+
+  for (auto &decorationConfig : config.decorations) {
+    auto [file, width, height, x, y] = decorationConfig;
+
+    Decoration decoration(basePath + file, width, height, x, y);
+
+    decorations.emplace_back(decoration);
+  }
 }
 
 void Game::Run() {
@@ -128,7 +133,10 @@ void Game::Render() {
   SDL_SetRenderDrawColor(sdl_renderer, 158, 200, 92, 255);
   SDL_RenderClear(sdl_renderer);
   map->Render();
-//  decoration->Render();
+
+  for (auto &decoration : decorations) {
+    decoration.Render();
+  }
 
   SDL_RenderPresent(sdl_renderer);
 }

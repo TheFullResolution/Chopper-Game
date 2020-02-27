@@ -1,6 +1,6 @@
 {
-  "assetsPath":"assets",
-  "spritePath":"images",
+  "assetsPath":"assets/",
+  "spritePath":"images/",
   "map":{
     "mapImageFile":"assets/map/jungle.png",
     "mapLayoutFile":"assets/map/jungle.map",

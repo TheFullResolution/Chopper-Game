@@ -14,14 +14,14 @@
 namespace quicktype {
 using nlohmann::json;
 
-inline json get_untyped(const json & j, const char * property) {
+inline json get_untyped(const json &j, const char *property) {
   if (j.find(property) != j.end()) {
     return j.at(property).get<json>();
   }
   return json();
 }
 
-inline json get_untyped(const json & j, std::string property) {
+inline json get_untyped(const json &j, std::string property) {
   return get_untyped(j, property.data());
 }
 
@@ -48,19 +48,19 @@ struct Config {
   Map map;
   std::vector<Decoration> decorations;
 };
-}
+} // namespace quicktype
 
 namespace nlohmann {
-void from_json(const json & j, quicktype::Decoration & x);
-void to_json(json & j, const quicktype::Decoration & x);
+void from_json(const json &j, quicktype::Decoration &x);
+void to_json(json &j, const quicktype::Decoration &x);
 
-void from_json(const json & j, quicktype::Map & x);
-void to_json(json & j, const quicktype::Map & x);
+void from_json(const json &j, quicktype::Map &x);
+void to_json(json &j, const quicktype::Map &x);
 
-void from_json(const json & j, quicktype::Config & x);
-void to_json(json & j, const quicktype::Config & x);
+void from_json(const json &j, quicktype::Config &x);
+void to_json(json &j, const quicktype::Config &x);
 
-inline void from_json(const json & j, quicktype::Decoration& x) {
+inline void from_json(const json &j, quicktype::Decoration &x) {
   x.file = j.at("file").get<std::string>();
   x.width = j.at("width").get<int64_t>();
   x.height = j.at("height").get<int64_t>();
@@ -68,7 +68,7 @@ inline void from_json(const json & j, quicktype::Decoration& x) {
   x.y = j.at("y").get<int64_t>();
 }
 
-inline void to_json(json & j, const quicktype::Decoration & x) {
+inline void to_json(json &j, const quicktype::Decoration &x) {
   j = json::object();
   j["file"] = x.file;
   j["width"] = x.width;
@@ -77,7 +77,7 @@ inline void to_json(json & j, const quicktype::Decoration & x) {
   j["y"] = x.y;
 }
 
-inline void from_json(const json & j, quicktype::Map& x) {
+inline void from_json(const json &j, quicktype::Map &x) {
   x.map_image_file = j.at("mapImageFile").get<std::string>();
   x.map_layout_file = j.at("mapLayoutFile").get<std::string>();
   x.scale = j.at("scale").get<int64_t>();
@@ -86,7 +86,7 @@ inline void from_json(const json & j, quicktype::Map& x) {
   x.map_size_y = j.at("mapSizeY").get<int64_t>();
 }
 
-inline void to_json(json & j, const quicktype::Map & x) {
+inline void to_json(json &j, const quicktype::Map &x) {
   j = json::object();
   j["mapImageFile"] = x.map_image_file;
   j["mapLayoutFile"] = x.map_layout_file;
@@ -96,18 +96,18 @@ inline void to_json(json & j, const quicktype::Map & x) {
   j["mapSizeY"] = x.map_size_y;
 }
 
-inline void from_json(const json & j, quicktype::Config& x) {
+inline void from_json(const json &j, quicktype::Config &x) {
   x.assets_path = j.at("assetsPath").get<std::string>();
   x.sprite_path = j.at("spritePath").get<std::string>();
   x.map = j.at("map").get<quicktype::Map>();
   x.decorations = j.at("decorations").get<std::vector<quicktype::Decoration>>();
 }
 
-inline void to_json(json & j, const quicktype::Config & x) {
+inline void to_json(json &j, const quicktype::Config &x) {
   j = json::object();
   j["assetsPath"] = x.assets_path;
   j["spritePath"] = x.sprite_path;
   j["map"] = x.map;
   j["decorations"] = x.decorations;
 }
-}
+} // namespace nlohmann
