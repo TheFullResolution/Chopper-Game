@@ -24,3 +24,4 @@ cmake-build-debug/
 .com.apple.timemachine.donotpresent
 
 ChopperGame
+/node_modules/

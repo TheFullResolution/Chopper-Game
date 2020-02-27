@@ -3,7 +3,7 @@
 //
 
 #include "Game.h"
-#include "Config.h"
+#include "../lib/config.h"
 #include "_consts.h"
 #include "components/Decoration/Decoration.h"
 #include "components/Player/Player.h"
@@ -50,7 +50,7 @@ void Game::LoadLevel() {
 
   std::ifstream config_json("assets/config.json");
 
-  quicktype::Config config = nlohmann::json::parse(config_json);
+  config::Config config = nlohmann::json::parse(config_json);
 
   auto [map_image_file, map_layout_file, scale, tile_size, map_size_x,
         map_size_y] = config.map;
