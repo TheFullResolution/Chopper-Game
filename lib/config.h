@@ -11,6 +11,22 @@
 
 #include <nlohmann/json.hpp>
 
+#ifndef NLOHMANN_OPT_HELPER
+#define NLOHMANN_OPT_HELPER
+namespace nlohmann {
+    template <typename T>
+    struct adl_serializer<std::shared_ptr<T>> {
+        static void to_json(json & j, const std::shared_ptr<T> & opt) {
+            if (!opt) j = nullptr; else j = *opt;
+        }
+
+        static std::shared_ptr<T> from_json(const json & j) {
+            if (j.is_null()) return std::unique_ptr<T>(); else return std::unique_ptr<T>(new T(j.get<T>()));
+        }
+    };
+}
+#endif
+
 namespace config {
     using nlohmann::json;
 
@@ -25,12 +41,33 @@ namespace config {
         return get_untyped(j, property.data());
     }
 
+    template <typename T>
+    inline std::shared_ptr<T> get_optional(const json & j, const char * property) {
+        if (j.find(property) != j.end()) {
+            return j.at(property).get<std::shared_ptr<T>>();
+        }
+        return std::shared_ptr<T>();
+    }
+
+    template <typename T>
+    inline std::shared_ptr<T> get_optional(const json & j, std::string property) {
+        return get_optional<T>(j, property.data());
+    }
+
+    struct Animation {
+        int64_t speed;
+        int64_t frame_width;
+        int64_t frame_height;
+    };
+
     struct Player {
         std::string file;
         int64_t width;
         int64_t height;
         int64_t x;
         int64_t y;
+        int64_t scale;
+        std::shared_ptr<Animation> animation;
     };
 
     struct Map {
@@ -52,6 +89,9 @@ namespace config {
 }
 
 namespace nlohmann {
+    void from_json(const json & j, config::Animation & x);
+    void to_json(json & j, const config::Animation & x);
+
     void from_json(const json & j, config::Player & x);
     void to_json(json & j, const config::Player & x);
 
@@ -61,12 +101,27 @@ namespace nlohmann {
     void from_json(const json & j, config::Config & x);
     void to_json(json & j, const config::Config & x);
 
+    inline void from_json(const json & j, config::Animation& x) {
+        x.speed = j.at("speed").get<int64_t>();
+        x.frame_width = j.at("frameWidth").get<int64_t>();
+        x.frame_height = j.at("frameHeight").get<int64_t>();
+    }
+
+    inline void to_json(json & j, const config::Animation & x) {
+        j = json::object();
+        j["speed"] = x.speed;
+        j["frameWidth"] = x.frame_width;
+        j["frameHeight"] = x.frame_height;
+    }
+
     inline void from_json(const json & j, config::Player& x) {
         x.file = j.at("file").get<std::string>();
         x.width = j.at("width").get<int64_t>();
         x.height = j.at("height").get<int64_t>();
         x.x = j.at("x").get<int64_t>();
         x.y = j.at("y").get<int64_t>();
+        x.scale = j.at("scale").get<int64_t>();
+        x.animation = config::get_optional<config::Animation>(j, "animation");
     }
 
     inline void to_json(json & j, const config::Player & x) {
@@ -76,6 +131,8 @@ namespace nlohmann {
         j["height"] = x.height;
         j["x"] = x.x;
         j["y"] = x.y;
+        j["scale"] = x.scale;
+        j["animation"] = x.animation;
     }
 
     inline void from_json(const json & j, config::Map& x) {

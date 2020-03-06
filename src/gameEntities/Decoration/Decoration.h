@@ -5,11 +5,15 @@
 #ifndef CHOPPERGAME_DECORATION_H
 #define CHOPPERGAME_DECORATION_H
 
-#include "../Sprite/Sprite.h"
-class Decoration: public Sprite {
+#include "../../components/PositionState/PositionState.h"
+#include "../../components/Sprite/Sprite.h"
+
+class Decoration : public Sprite, public PositionState {
 public:
   Decoration(const std::string &textureFile, int width, int height, int x,
-             int y);
+             int y, int scale);
+
+  void Update(float deltaTime);
 };
 
 #endif // CHOPPERGAME_DECORATION_H

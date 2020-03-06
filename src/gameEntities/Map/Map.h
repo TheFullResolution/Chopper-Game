@@ -5,7 +5,7 @@
 #ifndef CHOPPERGAME_MAP_H
 #define CHOPPERGAME_MAP_H
 
-#include "../Tile/Tile.h"
+#include "../../components/Tile/Tile.h"
 #include <string>
 #include <vector>
 

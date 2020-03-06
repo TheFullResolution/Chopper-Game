@@ -14,7 +14,13 @@
     "width":32,
     "height":32,
     "x":240,
-    "y":106
+    "y":106,
+    "scale": 1,
+    "animation": {
+      "speed": 90,
+      "frameWidth": 2,
+      "frameHeight": 4
+    }
   },
   "decorations":[
     {
@@ -22,14 +28,16 @@
       "width":16,
       "height":32,
       "x":700,
-      "y":380
+      "y":380,
+      "scale": 1
     },
     {
       "file":"tree-small-4.png",
       "width":16,
       "height":32,
       "x":310,
-      "y":490
+      "y":490,
+      "scale": 1
     }
   ]
 }

@@ -3,7 +3,7 @@
 //
 
 #include "Map.h"
-#include "../TextureManager/TextureManager.h"
+#include "../../components/TextureManager/TextureManager.h"
 #include <fstream>
 #include <iostream>
 

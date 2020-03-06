@@ -5,7 +5,7 @@
 #ifndef CHOPPERGAME_TILE_H
 #define CHOPPERGAME_TILE_H
 
-#include "../../_stucts.h"
+#include "../../_utils.h"
 #include <SDL_render.h>
 
 class Tile {
