@@ -19,32 +19,32 @@ void KeyboardControl::Update(utils::vector *velocity, int *animationIndex) {
   if (Game::event.type == SDL_KEYDOWN) {
     auto keyCode = Game::event.key.keysym.sym;
     if (keyCode == upKey) {
-      velocity->y = 0;
-      velocity->x = -40;
-      *animationIndex = 4;
+      velocity->y = -40;
+      velocity->x = 0;
+      *animationIndex = 3;
     }
 
     if (keyCode == downKey) {
       velocity->y = 40;
       velocity->x = 0;
-      *animationIndex = 1;
+      *animationIndex = 0;
     }
 
     if (keyCode == rightKey) {
       velocity->y = 0;
       velocity->x = 40;
-      *animationIndex = 2;
+      *animationIndex = 1;
     }
 
     if (keyCode == leftKey) {
       velocity->y = 0;
-      velocity->x = 40;
-      *animationIndex = 3;
+      velocity->x = -40;
+      *animationIndex = 2;
     }
   } else if (Game::event.type == SDL_KEYUP) {
     auto keyCode = Game::event.key.keysym.sym;
     if (keyCode == upKey) {
-      velocity->x = 0;
+      velocity->y = 0;
     }
 
     if (keyCode == downKey) {

@@ -9,6 +9,7 @@ PositionState::PositionState(int width, int height, int scale, int x, int y): wi
         velocity.x = 0;
         velocity.y = 0;
         animationIndex = 1;
+
 }
 void PositionState::Update(float deltaTime){
     position.x += velocity.x * deltaTime;

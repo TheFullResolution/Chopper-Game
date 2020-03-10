@@ -7,14 +7,15 @@
 #include <SDL_timer.h>
 
 Sprite::Sprite(const std::string &textureFile, int width, int height, int scale)
-    : isFixed(false), isAnimated(false) {
+    : isFixed(false), isAnimated(false), animationSpeed(0), frameWidth(0),
+      frameHeight(0) {
   texture = TextureManager::LoadTexture(textureFile.c_str());
 
   Initialize(width, height, scale);
 }
 
-Sprite::Sprite(const std::string &textureFile, int animationSpeed,
-               int frameWidth, int frameHeight, int width, int height, int scale)
+Sprite::Sprite(const std::string &textureFile, int width, int height, int scale,
+               int animationSpeed, int frameWidth, int frameHeight)
     : isFixed(false), isAnimated(true), animationSpeed(animationSpeed),
       frameWidth(frameWidth), frameHeight(frameHeight) {
 
@@ -25,7 +26,7 @@ Sprite::Sprite(const std::string &textureFile, int animationSpeed,
 
 void Sprite::Initialize(int width, int height, int scale) {
   sourceRectangle.x = 0;
-  sourceRectangle.y = height;
+  sourceRectangle.y = 0;
   sourceRectangle.h = width;
   sourceRectangle.w = height;
 
@@ -34,16 +35,25 @@ void Sprite::Initialize(int width, int height, int scale) {
 }
 
 void Sprite::Update(utils::vector *position) {
+    if (isAnimated) {
+        sourceRectangle.x =
+                sourceRectangle.w *
+                static_cast<int>((SDL_GetTicks() / animationSpeed) % frameWidth);
+    }
+    destinationRectangle.x = static_cast<int>(position->x);
+    destinationRectangle.y = static_cast<int>(position->y);
+}
+
+void Sprite::Update(utils::vector *position, const int *animationIndex,
+                    const int *height) {
   if (isAnimated) {
     sourceRectangle.x =
         sourceRectangle.w *
         static_cast<int>((SDL_GetTicks() / animationSpeed) % frameWidth);
   }
-
+  sourceRectangle.y = *animationIndex * *height;
   destinationRectangle.x = static_cast<int>(position->x);
   destinationRectangle.y = static_cast<int>(position->y);
-
-
 }
 
 void Sprite::Render() {

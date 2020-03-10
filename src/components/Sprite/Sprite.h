@@ -12,8 +12,9 @@ class Sprite {
 
 public:
   Sprite(const std::string &textureFile, int width, int height, int scale);
-  Sprite(const std::string &textureFile, int animationSpeed, int frameWidth,
-         int frameHeight, int width, int height, int scale);
+  Sprite(const std::string &textureFile, int width, int height, int scale, int animationSpeed, int frameWidth,
+         int frameHeight);
+  void Update(utils::vector *position, const int *animationIndex, const int *height);
   void Update(utils::vector *position);
   void Render();
 

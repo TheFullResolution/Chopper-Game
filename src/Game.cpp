@@ -135,8 +135,6 @@ void Game::ProcessInput() {
     break;
   }
   case SDL_KEYDOWN: {
-    std::cout << "Physical key acting as  " << event.key.keysym.sym << std::endl;
-
     if (event.key.keysym.sym == SDLK_ESCAPE) {
       isRunning = false;
     }

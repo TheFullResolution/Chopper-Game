@@ -12,6 +12,6 @@ Player::Player(const std::string &textureFile, int width, int height, int x,
 
 void Player::Update(float deltaTime) {
   PositionState::Update(deltaTime);
-  Sprite::Update(&position);
+  Sprite::Update(&position, &animationIndex, &height);
   KeyboardControl::Update(&velocity, &animationIndex);
 }
