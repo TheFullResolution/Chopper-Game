@@ -5,6 +5,7 @@
 #ifndef CHOPPERGAME_POSITIONSTATE_H
 #define CHOPPERGAME_POSITIONSTATE_H
 
+#include "../../_consts.h"
 #include "../../_utils.h"
 
 class PositionState {
@@ -14,7 +15,7 @@ public:
   virtual void Update(float deltaTime);
   utils::vector velocity;
   utils::vector position;
-  int animationIndex;
+  consts::AnimationIndex animationIndex;
   int width;
   int height;
   int scale;

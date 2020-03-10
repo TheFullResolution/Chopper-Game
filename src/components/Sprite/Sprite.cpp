@@ -3,6 +3,7 @@
 //
 
 #include "Sprite.h"
+#include "../../_consts.h"
 #include "../TextureManager/TextureManager.h"
 #include <SDL_timer.h>
 
@@ -40,7 +41,8 @@ void Sprite::Update(utils::vector *position) {
   destinationRectangle.y = static_cast<int>(position->y);
 }
 
-void Sprite::Update(utils::vector *position, const int *animationIndex,
+void Sprite::Update(utils::vector *position,
+                    const consts::AnimationIndex *animationIndex,
                     const int *height) {
   if (isAnimated) {
     sourceRectangle.x =

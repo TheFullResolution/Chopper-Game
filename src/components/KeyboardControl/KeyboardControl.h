@@ -5,13 +5,14 @@
 #ifndef CHOPPERGAME_KEYBOARDCONTROL_H
 #define CHOPPERGAME_KEYBOARDCONTROL_H
 
+#include "../../_consts.h"
 #include "../../_utils.h"
 #include <SDL_keycode.h>
 
 class KeyboardControl {
 public:
   KeyboardControl();
-  void Update(utils::vector *velocity, int *animationIndex);
+  void Update(utils::vector *velocity, consts::AnimationIndex *animationIndex);
 
 private:
   SDL_Keycode upKey;
@@ -19,6 +20,7 @@ private:
   SDL_Keycode rightKey;
   SDL_Keycode leftKey;
   SDL_Keycode shootKey;
+
 
 };
 

@@ -4,6 +4,7 @@
 
 #include "KeyboardControl.h"
 #include "../../Game.h"
+#include "../../_consts.h"
 #include "../../_utils.h"
 #include <SDL_events.h>
 #include <SDL_keycode.h>
@@ -15,31 +16,31 @@ KeyboardControl::KeyboardControl() {
   leftKey = SDLK_LEFT;
   shootKey = SDLK_SPACE;
 }
-void KeyboardControl::Update(utils::vector *velocity, int *animationIndex) {
+void KeyboardControl::Update(utils::vector *velocity, consts::AnimationIndex *animationIndex) {
   if (Game::event.type == SDL_KEYDOWN) {
     auto keyCode = Game::event.key.keysym.sym;
     if (keyCode == upKey) {
       velocity->y = -40;
       velocity->x = 0;
-      *animationIndex = 3;
+      *animationIndex = consts::AnimationIndex::up;
     }
 
     if (keyCode == downKey) {
       velocity->y = 40;
       velocity->x = 0;
-      *animationIndex = 0;
+      *animationIndex = consts::AnimationIndex::down;
     }
 
     if (keyCode == rightKey) {
       velocity->y = 0;
       velocity->x = 40;
-      *animationIndex = 1;
+      *animationIndex = consts::AnimationIndex::right;
     }
 
     if (keyCode == leftKey) {
       velocity->y = 0;
       velocity->x = -40;
-      *animationIndex = 2;
+      *animationIndex = consts::AnimationIndex::left;
     }
   } else if (Game::event.type == SDL_KEYUP) {
     auto keyCode = Game::event.key.keysym.sym;

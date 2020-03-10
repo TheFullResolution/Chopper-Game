@@ -8,7 +8,7 @@ PositionState::PositionState(int width, int height, int scale, int x, int y): wi
         position.y = static_cast<float>(y);
         velocity.x = 0;
         velocity.y = 0;
-        animationIndex = 1;
+        animationIndex = consts::AnimationIndex::down;
 
 }
 void PositionState::Update(float deltaTime){
