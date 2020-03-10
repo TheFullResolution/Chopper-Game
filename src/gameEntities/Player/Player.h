@@ -14,7 +14,7 @@ public:
   Player(const std::string &textureFile, int width, int height, int x,
          int y, int scale, int animationSpeed,int frameWidth, int frameHeight);
 
-  void Update(float deltaTime);
+  void Update(float deltaTime) override;
 
 };
 

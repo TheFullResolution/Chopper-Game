@@ -11,9 +11,10 @@
 class Sprite {
 
 public:
-  Sprite(const std::string &textureFile, int width, int height, int scale);
-  Sprite(const std::string &textureFile, int width, int height, int scale, int animationSpeed, int frameWidth,
+  Sprite(const std::string &textureFile);
+  Sprite(const std::string &textureFile, int animationSpeed, int frameWidth,
          int frameHeight);
+  void Initialize(const int *width, const int *height, const int *scale);
   void Update(utils::vector *position, const int *animationIndex, const int *height);
   void Update(utils::vector *position);
   void Render();
@@ -27,7 +28,6 @@ private:
   int frameHeight;
   SDL_Rect sourceRectangle;
   SDL_Rect destinationRectangle;
-  void Initialize(int width, int height, int scale);
 };
 
 #endif // CHOPPERGAME_SPRITE_H

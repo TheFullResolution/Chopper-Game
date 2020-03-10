@@ -6,9 +6,10 @@
 Player::Player(const std::string &textureFile, int width, int height, int x,
                int y, int scale, int animationSpeed, int frameWidth,
                int frameHeight)
-    : Sprite(textureFile, width, height, scale, animationSpeed, frameWidth,
-             frameHeight),
-      PositionState(width, height, scale, x, y) {}
+    : Sprite(textureFile, animationSpeed, frameWidth, frameHeight),
+      PositionState(width, height, scale, x, y) {
+  Sprite::Initialize(&width, &height, &scale);
+}
 
 void Player::Update(float deltaTime) {
   PositionState::Update(deltaTime);

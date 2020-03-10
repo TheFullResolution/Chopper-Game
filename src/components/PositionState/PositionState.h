@@ -11,7 +11,7 @@ class PositionState {
 public:
   PositionState(int width, int height, int scale,  int x,
                 int y);
-  void Update(float deltaTime);
+  virtual void Update(float deltaTime);
   utils::vector velocity;
   utils::vector position;
   int animationIndex;
