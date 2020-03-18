@@ -3,7 +3,6 @@
 //
 
 #include "KeyboardControl.h"
-#include "../../Game.h"
 #include "../../_consts.h"
 #include "../../_utils.h"
 #include <SDL_events.h>
@@ -16,9 +15,9 @@ KeyboardControl::KeyboardControl() {
   leftKey = SDLK_LEFT;
   shootKey = SDLK_SPACE;
 }
-void KeyboardControl::Update(utils::vector *velocity, consts::AnimationIndex *animationIndex) {
-  if (Game::event.type == SDL_KEYDOWN) {
-    auto keyCode = Game::event.key.keysym.sym;
+void KeyboardControl::Update(utils::vector *velocity, consts::AnimationIndex *animationIndex,   SDL_Event *event) {
+  if (event->type == SDL_KEYDOWN) {
+    auto keyCode = event->key.keysym.sym;
     if (keyCode == upKey) {
       velocity->y = -40;
       velocity->x = 0;
@@ -42,8 +41,8 @@ void KeyboardControl::Update(utils::vector *velocity, consts::AnimationIndex *an
       velocity->x = -40;
       *animationIndex = consts::AnimationIndex::left;
     }
-  } else if (Game::event.type == SDL_KEYUP) {
-    auto keyCode = Game::event.key.keysym.sym;
+  } else if (event->type == SDL_KEYUP) {
+    auto keyCode = event->key.keysym.sym;
     if (keyCode == upKey) {
       velocity->y = 0;
     }

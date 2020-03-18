@@ -4,13 +4,12 @@
 
 #include "Sprite.h"
 #include "../../_consts.h"
-#include "../TextureManager/TextureManager.h"
 #include <SDL_timer.h>
 
 Sprite::Sprite(const std::string &textureFile)
     : isFixed(false), isAnimated(false), animationSpeed(0), frameWidth(0),
       frameHeight(0) {
-  texture = TextureManager::LoadTexture(textureFile.c_str());
+//  texture = TextureManager::LoadTexture(textureFile.c_str());
 }
 
 Sprite::Sprite(const std::string &textureFile, int animationSpeed,
@@ -18,7 +17,7 @@ Sprite::Sprite(const std::string &textureFile, int animationSpeed,
     : isFixed(false), isAnimated(true), animationSpeed(animationSpeed),
       frameWidth(frameWidth), frameHeight(frameHeight) {
 
-  texture = TextureManager::LoadTexture(textureFile.c_str());
+//  texture = TextureManager::LoadTexture(textureFile.c_str());
 }
 
 void Sprite::Initialize(const int *width, const int *height, const int *scale) {
@@ -55,6 +54,6 @@ void Sprite::Update(utils::vector *position,
 }
 
 void Sprite::Render() {
-  TextureManager::Draw(texture, sourceRectangle, destinationRectangle,
-                       SDL_FLIP_NONE);
+//  TextureManager::Draw(texture, sourceRectangle, destinationRectangle,
+//                       SDL_FLIP_NONE);
 }

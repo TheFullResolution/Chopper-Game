@@ -1,49 +1,12 @@
 //
 // Created by Jedrzej Lewandowski on 20/11/2019.
 //
-
-#include "Game.h"
-#include "../lib/config.h"
-#include "_consts.h"
-#include "gameEntities/Decoration/Decoration.h"
-#include "gameEntities/Map/Map.h"
-#include "gameEntities/Player/Player.h"
-
-#include <iostream>
-#include <SDL_ttf.h>
+#include "./Game.h"
+#include "../../../lib/config.h"
 #include <boost/property_tree/json_parser.hpp>
 
-Map *map;
-Player *player;
-SDL_Renderer *Game::sdl_renderer;
-SDL_Window *Game::sdl_window;
-SDL_Event Game::event;
-std::vector<Decoration> decorations;
-
-Game::Game() {
+Game::Game(Renderer *renderer) : renderer(renderer) {
   isRunning = false;
-
-  if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
-    std::cerr << "Error initializing SDL." << std::endl;
-    return;
-  }
-  if (TTF_Init() != 0) {
-    std::cerr << "Error initializing SDL TTF" << std::endl;
-    return;
-  }
-
-  sdl_window = SDL_CreateWindow(consts::title.data(), SDL_WINDOWPOS_UNDEFINED,
-                                SDL_WINDOWPOS_UNDEFINED, consts::WINDOW_WIDTH,
-                                consts::WINDOW_HEIGHT, SDL_WINDOW_RESIZABLE);
-  if (nullptr == sdl_window) {
-    std::cerr << "Error creating SDL window." << std::endl;
-    return;
-  }
-  sdl_renderer = SDL_CreateRenderer(sdl_window, -1, SDL_RENDERER_ACCELERATED);
-  if (nullptr == sdl_renderer) {
-    std::cerr << "Error creating SDL renderer." << std::endl;
-    return;
-  }
 
   LoadLevel();
 }
@@ -67,7 +30,7 @@ void Game::LoadLevel() {
 
     Decoration decoration(basePath + file, width, height, x, y, scale);
 
-    decorations.emplace_back(decoration);
+    decorations->emplace_back(decoration);
   }
 
   auto [file, width, height, x, y, scale, animation] = config.player;
@@ -94,14 +57,14 @@ void Game::Run() {
 
     ProcessInput();
     Update(deltaTime);
-    Render();
+    renderer -> Render(map);
 
     frame_end = SDL_GetTicks();
     frame_duration = frame_end - frame_start;
     frame_count++;
 
     if (frame_end - title_timestamp >= 1000) {
-      UpdateWindowTitle(frame_count);
+      renderer->UpdateWindowTitle(frame_count);
       frame_count = 0;
       title_timestamp = frame_end;
     }
@@ -110,32 +73,27 @@ void Game::Run() {
       SDL_Delay(consts::FRAME_TARGET_TIME - frame_duration);
     }
   }
-  Destroy();
 }
 
 void Game::Update(float deltaTime) {
-  for (auto &decoration : decorations) {
+  for (auto decoration : *decorations) {
     decoration.Update(deltaTime);
   }
   player->Update(deltaTime);
 }
 
-void Game::UpdateWindowTitle(int fps) {
-  std::string title{consts::title + "; FPS: " + std::to_string(fps)};
-  SDL_SetWindowTitle(sdl_window, title.data());
-}
 
 void Game::ProcessInput() {
 
-  SDL_PollEvent(&event);
+  SDL_PollEvent(event);
 
-  switch (event.type) {
+  switch (event->type) {
   case SDL_QUIT: {
     isRunning = false;
     break;
   }
   case SDL_KEYDOWN: {
-    if (event.key.keysym.sym == SDLK_ESCAPE) {
+    if (event->key.keysym.sym == SDLK_ESCAPE) {
       isRunning = false;
     }
     break;
@@ -146,22 +104,4 @@ void Game::ProcessInput() {
   }
 }
 
-void Game::Destroy() {
-  SDL_DestroyRenderer(sdl_renderer);
-  SDL_DestroyWindow(sdl_window);
-  SDL_Quit();
-}
 
-void Game::Render() {
-
-  SDL_SetRenderDrawColor(sdl_renderer, 158, 200, 92, 255);
-  SDL_RenderClear(sdl_renderer);
-  map->Render();
-
-  for (auto &decoration : decorations) {
-    decoration.Render();
-  }
-  player->Render();
-
-  SDL_RenderPresent(sdl_renderer);
-}

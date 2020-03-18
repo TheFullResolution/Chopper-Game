@@ -3,7 +3,6 @@
 //
 
 #include "Map.h"
-#include "../../components/TextureManager/TextureManager.h"
 #include <fstream>
 #include <iostream>
 
@@ -11,7 +10,7 @@ Map::Map(const std::string &mapImageFile, const std::string &mapLayoutFile,
          int scale, int tileSize, int mapSizeX, int mapSizeY)
     : scale(scale), tileSize(tileSize) {
 
-  texture = TextureManager::LoadTexture(mapImageFile.c_str());
+//  texture = TextureManager::LoadTexture(mapImageFile.c_str());
 
   LoadMap(mapLayoutFile, mapSizeX, mapSizeY);
 }

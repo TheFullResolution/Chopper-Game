@@ -3,7 +3,6 @@
 //
 
 #include "Tile.h"
-#include "../TextureManager/TextureManager.h"
 
 Tile::Tile(int sourceRectX, int sourceRectY, int x, int y, int tileSize,
            int tileScale) {
@@ -19,6 +18,6 @@ Tile::Tile(int sourceRectX, int sourceRectY, int x, int y, int tileSize,
 }
 
 void Tile::Render(SDL_Texture *texture) {
-  TextureManager::Draw(texture, sourceRectangle, destinationRectangle,
-                       SDL_FLIP_NONE);
+//  TextureManager::Draw(texture, sourceRectangle, destinationRectangle,
+//                       SDL_FLIP_NONE);
 }

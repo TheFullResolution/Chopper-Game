@@ -1,8 +1,12 @@
-#include "Game.h"
+#include "controllers/Game/Game.h"
+#include "controllers/Renderer/Renderer.h"
 #include <iostream>
+#include "./_consts.h"
 
 int main() {
-  Game *game = new Game();
+  auto *renderer = new Renderer(consts::WINDOW_WIDTH, consts::WINDOW_HEIGHT, consts::title);
+
+  Game *game = new Game(renderer);
 
   game->Run();
 
