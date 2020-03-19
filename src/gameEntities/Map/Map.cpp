@@ -6,11 +6,9 @@
 #include <fstream>
 #include <iostream>
 
-Map::Map(const std::string &mapImageFile, const std::string &mapLayoutFile,
-         int scale, int tileSize, int mapSizeX, int mapSizeY)
-    : scale(scale), tileSize(tileSize) {
-
-//  texture = TextureManager::LoadTexture(mapImageFile.c_str());
+Map::Map(SDL_Texture *texture, const std::string &mapLayoutFile, int scale,
+         int tileSize, int mapSizeX, int mapSizeY)
+    : texture(texture), scale(scale), tileSize(tileSize) {
 
   LoadMap(mapLayoutFile, mapSizeX, mapSizeY);
 }
@@ -40,8 +38,9 @@ void Map::AddTile(int sourceRectX, int sourceRectY, int x, int y) {
   tiles.emplace_back(new Tile(sourceRectX, sourceRectY, x, y, tileSize, scale));
 }
 
-void Map::Render() {
+void Map::Render(SDL_Renderer *sdl_renderer) {
   for (auto &tile : tiles) {
-    tile->Render(texture);
+    tile->Render(sdl_renderer, texture);
   }
 }
+SDL_Texture *Map::getTexture() const { return texture; }

@@ -17,7 +17,7 @@ Tile::Tile(int sourceRectX, int sourceRectY, int x, int y, int tileSize,
   destinationRectangle.h = tileScale * tileSize;
 }
 
-void Tile::Render(SDL_Texture *texture) {
-//  TextureManager::Draw(texture, sourceRectangle, destinationRectangle,
-//                       SDL_FLIP_NONE);
+void Tile::Render(  SDL_Renderer *sdl_renderer, SDL_Texture *texture) {
+  SDL_RenderCopyEx(sdl_renderer, texture, &sourceRectangle,
+                   &destinationRectangle, 0.0, nullptr, SDL_FLIP_NONE);
 }

@@ -51,12 +51,12 @@ void Renderer::Render(Map *map, std::vector<Decoration> *decorations,
                       Player *player) {
   SDL_SetRenderDrawColor(sdl_renderer, 158, 200, 92, 255);
   SDL_RenderClear(sdl_renderer);
-  map->Render();
+  map->Render(sdl_renderer);
 
   for (auto &decoration : *decorations) {
-    decoration.Render();
+    decoration.Render(sdl_renderer);
   }
-  player->Render();
+  player->Render(sdl_renderer);
 
   SDL_RenderPresent(sdl_renderer);
 }
@@ -66,10 +66,4 @@ SDL_Texture *Renderer::LoadTexture(const char *filename) {
   SDL_Texture *texture = SDL_CreateTextureFromSurface(sdl_renderer, surface);
   SDL_FreeSurface(surface);
   return texture;
-}
-
-void Renderer::Draw(SDL_Texture *texture, SDL_Rect sourceRectangle,
-                    SDL_Rect destinationRectangle, SDL_RendererFlip flip) {
-  SDL_RenderCopyEx(sdl_renderer, texture, &sourceRectangle,
-                   &destinationRectangle, 0.0, nullptr, flip);
 }

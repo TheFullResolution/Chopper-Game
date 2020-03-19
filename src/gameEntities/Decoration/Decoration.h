@@ -10,7 +10,7 @@
 
 class Decoration : public Sprite, public PositionState {
 public:
-  Decoration(const std::string &textureFile, int width, int height, int x,
+  Decoration(SDL_Texture *texture, int width, int height, int x,
              int y, int scale);
 
   void Update(float deltaTime);

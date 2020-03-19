@@ -5,13 +5,9 @@
 #include "../../../lib/config.h"
 #include <boost/property_tree/json_parser.hpp>
 
-Game::Game(Renderer *renderer) : renderer(renderer) {
-  isRunning = false;
+Game::Game(Renderer *renderer) : renderer(renderer) { isRunning = false; }
 
-  LoadLevel();
-}
-
-void Game::LoadLevel() {
+void Game::CreateGameEntities() {
 
   std::ifstream config_json("assets/config.json");
 
@@ -20,22 +16,24 @@ void Game::LoadLevel() {
   auto [map_image_file, map_layout_file, map_scale, tile_size, map_size_x,
         map_size_y] = config.map;
 
-  map = new Map(map_image_file, map_layout_file, map_scale, tile_size, map_size_x,
-                map_size_y);
+  map = new Map(renderer->LoadTexture(map_image_file.c_str()), map_layout_file,
+                map_scale, tile_size, map_size_x, map_size_y);
 
   std::string basePath = config.assets_path + config.sprite_path;
 
   for (auto &decorationConfig : config.decorations) {
     auto [file, width, height, x, y, scale, animation] = decorationConfig;
+    std::string decorationPath = basePath + file;
+    Decoration decoration(renderer->LoadTexture(decorationPath.c_str()),
+                          width, height, x, y, scale);
 
-    Decoration decoration(basePath + file, width, height, x, y, scale);
-
-    decorations->emplace_back(decoration);
+    decorations.emplace_back(decoration);
   }
 
   auto [file, width, height, x, y, scale, animation] = config.player;
-
-  player = new Player(basePath + file, width, height, x, y, scale, animation->speed,
+  std::string playerPath = basePath + file;
+  player = new Player(renderer->LoadTexture(playerPath.c_str()),
+                      width, height, x, y, scale, animation->speed,
                       animation->frame_width, animation->frame_height);
 }
 
@@ -51,13 +49,12 @@ void Game::Run() {
   while (isRunning) {
     frame_start = SDL_GetTicks();
 
-
     float deltaTime = (frame_start - frame_end) / 1000.0f;
     deltaTime = (deltaTime > 0.05f) ? 0.05f : deltaTime;
 
     ProcessInput();
     Update(deltaTime);
-    renderer -> Render(map);
+    renderer->Render(map, &decorations, player);
 
     frame_end = SDL_GetTicks();
     frame_duration = frame_end - frame_start;
@@ -76,24 +73,23 @@ void Game::Run() {
 }
 
 void Game::Update(float deltaTime) {
-  for (auto decoration : *decorations) {
+  for (auto decoration : decorations) {
     decoration.Update(deltaTime);
   }
-  player->Update(deltaTime);
+  player->Update(deltaTime, &event);
 }
-
 
 void Game::ProcessInput() {
 
-  SDL_PollEvent(event);
+  SDL_PollEvent(&event);
 
-  switch (event->type) {
+  switch (event.type) {
   case SDL_QUIT: {
     isRunning = false;
     break;
   }
   case SDL_KEYDOWN: {
-    if (event->key.keysym.sym == SDLK_ESCAPE) {
+    if (event.key.keysym.sym == SDLK_ESCAPE) {
       isRunning = false;
     }
     break;
@@ -103,5 +99,3 @@ void Game::ProcessInput() {
   }
   }
 }
-
-

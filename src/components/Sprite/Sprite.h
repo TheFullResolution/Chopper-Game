@@ -12,14 +12,14 @@
 class Sprite {
 
 public:
-  Sprite(const std::string &textureFile);
-  Sprite(const std::string &textureFile, int animationSpeed, int frameWidth,
+  explicit Sprite(SDL_Texture *texture);
+  Sprite(SDL_Texture *texture, int animationSpeed, int frameWidth,
          int frameHeight);
   void Initialize(const int *width, const int *height, const int *scale);
   void Update(utils::vector *position,
               const consts::AnimationIndex *animationIndex, const int *height);
   void Update(utils::vector *position);
-  void Render();
+  void Render(SDL_Renderer *sdl_renderer);
 
 private:
   SDL_Texture *texture;

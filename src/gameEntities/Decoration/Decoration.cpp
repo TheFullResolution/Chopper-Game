@@ -3,9 +3,9 @@
 //
 
 #include "Decoration.h"
-Decoration::Decoration(const std::string &textureFile, int width, int height,
+Decoration::Decoration(SDL_Texture *texture, int width, int height,
                        int x, int y, int scale)
-    : Sprite(textureFile), PositionState(width, height, scale, x, y) {
+    : Sprite(texture), PositionState(width, height, scale, x, y) {
   Sprite::Initialize(&width, &height, &scale);
 }
 

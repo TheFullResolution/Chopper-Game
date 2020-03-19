@@ -3,16 +3,19 @@
 //
 
 #include "Player.h"
-Player::Player(const std::string &textureFile, int width, int height, int x,
+Player::Player(SDL_Texture *texture, int width, int height, int x,
                int y, int scale, int animationSpeed, int frameWidth,
                int frameHeight)
-    : Sprite(textureFile, animationSpeed, frameWidth, frameHeight),
+    : Sprite(texture, animationSpeed, frameWidth, frameHeight),
       PositionState(width, height, scale, x, y) {
+
+
+
   Sprite::Initialize(&width, &height, &scale);
 }
 
-void Player::Update(float deltaTime) {
+void Player::Update(float deltaTime, SDL_Event *event) {
   PositionState::Update(deltaTime);
   Sprite::Update(&position, &animationIndex, &height);
-  KeyboardControl::Update(&velocity, &animationIndex);
+  KeyboardControl::Update(&velocity, &animationIndex, event);
 }

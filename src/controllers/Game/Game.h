@@ -17,14 +17,14 @@ private:
   Renderer *renderer;
   Map *map;
   Player *player;
-  SDL_Event *event;
-  std::vector<Decoration> *decorations;
+  SDL_Event event;
+  std::vector<Decoration> decorations;
 public:
   explicit Game(Renderer *renderer);
   void Run();
   void Update(float deltaTime);
   void ProcessInput();
-  void LoadLevel();
+  void CreateGameEntities();
 
 };
 

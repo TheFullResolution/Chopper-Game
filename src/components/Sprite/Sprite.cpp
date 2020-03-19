@@ -6,21 +6,20 @@
 #include "../../_consts.h"
 #include <SDL_timer.h>
 
-Sprite::Sprite(const std::string &textureFile)
-    : isFixed(false), isAnimated(false), animationSpeed(0), frameWidth(0),
+Sprite::Sprite(SDL_Texture *texture)
+    : texture(texture), isFixed(false), isAnimated(false), animationSpeed(0), frameWidth(0),
       frameHeight(0) {
-//  texture = TextureManager::LoadTexture(textureFile.c_str());
 }
 
-Sprite::Sprite(const std::string &textureFile, int animationSpeed,
+Sprite::Sprite(SDL_Texture *texture, int animationSpeed,
                int frameWidth, int frameHeight)
-    : isFixed(false), isAnimated(true), animationSpeed(animationSpeed),
+    :texture(texture), isFixed(false), isAnimated(true), animationSpeed(animationSpeed),
       frameWidth(frameWidth), frameHeight(frameHeight) {
-
-//  texture = TextureManager::LoadTexture(textureFile.c_str());
 }
 
 void Sprite::Initialize(const int *width, const int *height, const int *scale) {
+
+
   sourceRectangle.x = 0;
   sourceRectangle.y = 0;
   sourceRectangle.h = *width;
@@ -53,7 +52,7 @@ void Sprite::Update(utils::vector *position,
   destinationRectangle.y = static_cast<int>(position->y);
 }
 
-void Sprite::Render() {
-//  TextureManager::Draw(texture, sourceRectangle, destinationRectangle,
-//                       SDL_FLIP_NONE);
+void Sprite::Render(SDL_Renderer *sdl_renderer) {
+  SDL_RenderCopyEx(sdl_renderer, texture, &sourceRectangle,
+                   &destinationRectangle, 0.0, nullptr, SDL_FLIP_NONE);
 }

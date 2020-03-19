@@ -14,7 +14,7 @@ class KeyboardControl {
 public:
   KeyboardControl();
   void Update(utils::vector *velocity, consts::AnimationIndex *animationIndex,
-              SDL_Event *event;);
+              SDL_Event *event);
 
 private:
   SDL_Keycode upKey;

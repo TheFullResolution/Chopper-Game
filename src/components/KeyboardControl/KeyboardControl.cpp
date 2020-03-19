@@ -15,7 +15,9 @@ KeyboardControl::KeyboardControl() {
   leftKey = SDLK_LEFT;
   shootKey = SDLK_SPACE;
 }
-void KeyboardControl::Update(utils::vector *velocity, consts::AnimationIndex *animationIndex,   SDL_Event *event) {
+void KeyboardControl::Update(utils::vector *velocity,
+                             consts::AnimationIndex *animationIndex,
+                             SDL_Event *event) {
   if (event->type == SDL_KEYDOWN) {
     auto keyCode = event->key.keysym.sym;
     if (keyCode == upKey) {

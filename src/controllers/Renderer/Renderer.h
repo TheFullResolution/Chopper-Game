@@ -20,8 +20,7 @@ public:
   void UpdateWindowTitle(unsigned int fps);
 
   SDL_Texture *LoadTexture(const char *filename);
-  void Draw(SDL_Texture *texture, SDL_Rect sourceRectangle,
-                   SDL_Rect destinationRectangle, SDL_RendererFlip flip);
+
 private:
   std::string title;
   SDL_Window *sdl_window;

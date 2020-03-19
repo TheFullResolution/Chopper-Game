@@ -13,7 +13,7 @@ public:
   Tile(int sourceRectX, int sourceRectY, int x, int y, int tileSize,
        int tileScale);
 
-  void Render(SDL_Texture *texture);
+  void Render(SDL_Renderer *sdl_renderer, SDL_Texture *texture);
 
   SDL_Rect sourceRectangle;
   SDL_Rect destinationRectangle;

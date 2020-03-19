@@ -11,10 +11,10 @@
 #include <string>
 class Player: public Sprite, public PositionState, public KeyboardControl {
 public:
-  Player(const std::string &textureFile, int width, int height, int x,
+  Player(SDL_Texture *texture, int width, int height, int x,
          int y, int scale, int animationSpeed,int frameWidth, int frameHeight);
 
-  void Update(float deltaTime) override;
+  void Update(float deltaTime, SDL_Event *event);
 
 };
 
