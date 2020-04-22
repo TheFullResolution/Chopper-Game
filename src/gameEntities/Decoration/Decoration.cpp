@@ -9,7 +9,7 @@ Decoration::Decoration(SDL_Texture *texture, int width, int height,
   Sprite::Initialize(&width, &height, &scale);
 }
 
-void Decoration::Update(float deltaTime) {
+void Decoration::Update(float deltaTime, utils::vector &cameraPosition) {
   PositionState::Update(deltaTime);
-  Sprite::Update(&position);
+  Sprite::Update(&position, cameraPosition);
 }

@@ -14,7 +14,7 @@ public:
   Player(SDL_Texture *texture, int width, int height, int x,
          int y, int scale, int animationSpeed,int frameWidth, int frameHeight);
 
-  void Update(float deltaTime, SDL_Event *event);
+  void Update(float deltaTime, SDL_Event *event, utils::vector &cameraPosition);
 
 };
 

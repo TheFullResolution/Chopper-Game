@@ -7,15 +7,14 @@
 #include <SDL_timer.h>
 
 Sprite::Sprite(SDL_Texture *texture)
-    : texture(texture), isFixed(false), isAnimated(false), animationSpeed(0), frameWidth(0),
-      frameHeight(0) {
-}
+    : texture(texture), isFixed(false), isAnimated(false), animationSpeed(0),
+      frameWidth(0), frameHeight(0) {}
 
-Sprite::Sprite(SDL_Texture *texture, int animationSpeed,
-               int frameWidth, int frameHeight)
-    :texture(texture), isFixed(false), isAnimated(true), animationSpeed(animationSpeed),
-      frameWidth(frameWidth), frameHeight(frameHeight) {
-}
+Sprite::Sprite(SDL_Texture *texture, int animationSpeed, int frameWidth,
+               int frameHeight)
+    : texture(texture), isFixed(false), isAnimated(true),
+      animationSpeed(animationSpeed), frameWidth(frameWidth),
+      frameHeight(frameHeight) {}
 
 void Sprite::Initialize(const int *width, const int *height, const int *scale) {
   sourceRectangle.x = 0;
@@ -29,17 +28,17 @@ void Sprite::Initialize(const int *width, const int *height, const int *scale) {
   destinationRectangle.y = 0;
 }
 
-void Sprite::Update(utils::vector *position) {
+void Sprite::Update(utils::vector *position, utils::vector &cameraPosition) {
   if (isAnimated) {
     sourceRectangle.x =
         sourceRectangle.w *
         static_cast<int>((SDL_GetTicks() / animationSpeed) % frameWidth);
   }
-  destinationRectangle.x = static_cast<int>(position->x);
-  destinationRectangle.y = static_cast<int>(position->y);
+  destinationRectangle.x = position->x - (isFixed ? 0 : cameraPosition.x);
+  destinationRectangle.y = position->y - (isFixed ? 0 : cameraPosition.y);
 }
 
-void Sprite::Update(utils::vector *position,
+void Sprite::Update(utils::vector *position, utils::vector &cameraPosition,
                     const consts::AnimationIndex *animationIndex,
                     const int *height) {
   if (isAnimated) {
@@ -48,8 +47,8 @@ void Sprite::Update(utils::vector *position,
         static_cast<int>((SDL_GetTicks() / animationSpeed) % frameWidth);
   }
   sourceRectangle.y = *animationIndex * *height;
-  destinationRectangle.x = static_cast<int>(position->x);
-  destinationRectangle.y = static_cast<int>(position->y);
+  destinationRectangle.x = position->x - (isFixed ? 0 : cameraPosition.x);
+  destinationRectangle.y = position->y - (isFixed ? 0 : cameraPosition.y);
 }
 
 void Sprite::Render(SDL_Renderer *sdl_renderer) {

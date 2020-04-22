@@ -15,6 +15,14 @@ Tile::Tile(int sourceRectX, int sourceRectY, int x, int y, int tileSize,
   destinationRectangle.y = y;
   destinationRectangle.w = tileScale * tileSize;
   destinationRectangle.h = tileScale * tileSize;
+
+  position.x = static_cast<float>(x);
+  position.y = static_cast<float>(y);
+}
+
+void Tile::Update(utils::vector &cameraPosition) {
+  destinationRectangle.x = position.x - cameraPosition.x;
+  destinationRectangle.y = position.y - cameraPosition.y;
 }
 
 void Tile::Render(  SDL_Renderer *sdl_renderer, SDL_Texture *texture) {

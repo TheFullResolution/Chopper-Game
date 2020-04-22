@@ -18,7 +18,7 @@ include_directories(
 )
 add_compile_options(-Wall -Wextra -Wpedantic)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../.)
-add_executable(ChopperGame src/main.cpp src/controllers/Game/Game.cpp src/controllers/Game/Game.h src/_consts.h src/gameEntities/Map/Map.cpp src/gameEntities/Map/Map.h src/components/Tile/Tile.cpp src/components/Tile/Tile.h src/_utils.h src/gameEntities/Decoration/Decoration.cpp src/gameEntities/Decoration/Decoration.h src/components/Sprite/Sprite.cpp src/components/Sprite/Sprite.h src/gameEntities/Player/Player.cpp src/gameEntities/Player/Player.h src/components/KeyboardControl/KeyboardControl.cpp src/components/KeyboardControl/KeyboardControl.h src/components/PositionState/PositionState.cpp src/components/PositionState/PositionState.h src/controllers/Renderer/Renderer.cpp src/controllers/Renderer/Renderer.h)
+add_executable(ChopperGame src/main.cpp src/controllers/Game/Game.cpp src/controllers/Game/Game.h src/_consts.h src/gameEntities/Map/Map.cpp src/gameEntities/Map/Map.h src/components/Tile/Tile.cpp src/components/Tile/Tile.h src/_utils.h src/gameEntities/Decoration/Decoration.cpp src/gameEntities/Decoration/Decoration.h src/components/Sprite/Sprite.cpp src/components/Sprite/Sprite.h src/gameEntities/Player/Player.cpp src/gameEntities/Player/Player.h src/components/KeyboardControl/KeyboardControl.cpp src/components/KeyboardControl/KeyboardControl.h src/components/PositionState/PositionState.cpp src/components/PositionState/PositionState.h src/controllers/Renderer/Renderer.cpp src/controllers/Renderer/Renderer.h src/gameEntities/Camera/Camera.cpp src/gameEntities/Camera/Camera.h)
 
 target_link_libraries(
         ChopperGame

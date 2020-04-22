@@ -38,9 +38,14 @@ void Map::AddTile(int sourceRectX, int sourceRectY, int x, int y) {
   tiles.emplace_back(new Tile(sourceRectX, sourceRectY, x, y, tileSize, scale));
 }
 
+void Map::Update(utils::vector &cameraPosition) {
+  for (auto &tile : tiles) {
+    tile->Update(cameraPosition);
+  }
+}
+
 void Map::Render(SDL_Renderer *sdl_renderer) {
   for (auto &tile : tiles) {
     tile->Render(sdl_renderer, texture);
   }
 }
-SDL_Texture *Map::getTexture() const { return texture; }

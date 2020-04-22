@@ -14,7 +14,7 @@ public:
   Map(SDL_Texture *texture, const std::string &mapLayoutFile, int scale,
       int tileSize, int mapSizeX, int mapSizeY);
   void Render(SDL_Renderer *sdl_renderer);
-  SDL_Texture *getTexture() const;
+  void Update(utils::vector &cameraPosition);
 
 private:
   void AddTile(int sourceX, int sourceY, int x, int y);

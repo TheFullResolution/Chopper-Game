@@ -19,26 +19,26 @@ void KeyboardControl::Update(utils::vector *velocity,
   if (event->type == SDL_KEYDOWN) {
     auto keyCode = event->key.keysym.sym;
     if (keyCode == upKey) {
-      velocity->y = -40;
+      velocity->y = -60;
       velocity->x = 0;
       *animationIndex = consts::AnimationIndex::up;
     }
 
     if (keyCode == downKey) {
-      velocity->y = 40;
+      velocity->y = 60;
       velocity->x = 0;
       *animationIndex = consts::AnimationIndex::down;
     }
 
     if (keyCode == rightKey) {
       velocity->y = 0;
-      velocity->x = 40;
+      velocity->x = 60;
       *animationIndex = consts::AnimationIndex::right;
     }
 
     if (keyCode == leftKey) {
       velocity->y = 0;
-      velocity->x = -40;
+      velocity->x = -60;
       *animationIndex = consts::AnimationIndex::left;
     }
   } else if (event->type == SDL_KEYUP) {

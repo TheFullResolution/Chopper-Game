@@ -4,7 +4,7 @@
   "map":{
     "mapImageFile":"assets/map/jungle.png",
     "mapLayoutFile":"assets/map/jungle.map",
-    "scale":1,
+    "scale":2,
     "tileSize":32,
     "mapSizeX":25,
     "mapSizeY":20

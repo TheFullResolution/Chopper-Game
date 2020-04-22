@@ -16,9 +16,9 @@ public:
   Sprite(SDL_Texture *texture, int animationSpeed, int frameWidth,
          int frameHeight);
   void Initialize(const int *width, const int *height, const int *scale);
-  void Update(utils::vector *position,
+  void Update(utils::vector *position, utils::vector &cameraPosition,
               const consts::AnimationIndex *animationIndex, const int *height);
-  void Update(utils::vector *position);
+  void Update(utils::vector *position, utils::vector &cameraPosition);
   void Render(SDL_Renderer *sdl_renderer);
 
 private:

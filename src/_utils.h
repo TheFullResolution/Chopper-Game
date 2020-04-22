@@ -12,9 +12,5 @@ struct vector {
   float y;
 };
 
-struct render {
-
-};
-
 } // namespace utils
 #endif

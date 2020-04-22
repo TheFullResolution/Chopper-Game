@@ -13,7 +13,7 @@ public:
   Decoration(SDL_Texture *texture, int width, int height, int x,
              int y, int scale);
 
-  void Update(float deltaTime);
+  void Update(float deltaTime, utils::vector &cameraPosition);
 };
 
 #endif // CHOPPERGAME_DECORATION_H

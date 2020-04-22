@@ -11,8 +11,8 @@ Player::Player(SDL_Texture *texture, int width, int height, int x, int y,
   Sprite::Initialize(&width, &height, &scale);
 }
 
-void Player::Update(float deltaTime, SDL_Event *event) {
-  PositionState::Update(deltaTime);
-  Sprite::Update(&position, &animationIndex, &height);
+void Player::Update(float deltaTime, SDL_Event *event, utils::vector &cameraPosition) {
   KeyboardControl::Update(&velocity, &animationIndex, event);
+  PositionState::Update(deltaTime);
+  Sprite::Update(&position, cameraPosition, &animationIndex, &height);
 }

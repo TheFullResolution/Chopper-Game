@@ -8,6 +8,7 @@
 Game::Game(Renderer *renderer) : renderer(renderer) { isRunning = false; }
 
 void Game::CreateGameEntities() {
+  camera = new Camera(0, 0, consts::WINDOW_WIDTH, consts::WINDOW_HEIGHT);
 
   std::ifstream config_json("assets/config.json");
 
@@ -26,17 +27,17 @@ void Game::CreateGameEntities() {
 
     std::string decorationPath = basePath + file;
 
-    Decoration decoration(renderer->LoadTexture(decorationPath.c_str()),
-                          width, height, x, y, scale);
+    Decoration decoration(renderer->LoadTexture(decorationPath.c_str()), width,
+                          height, x, y, scale);
 
     decorations.emplace_back(decoration);
   }
 
   auto [file, width, height, x, y, scale, animation] = config.player;
   std::string playerPath = basePath + file;
-  player = new Player(renderer->LoadTexture(playerPath.c_str()),
-                      width, height, x, y, scale, animation->speed,
-                      animation->frame_width, animation->frame_height);
+  player = new Player(renderer->LoadTexture(playerPath.c_str()), width, height,
+                      x, y, scale, animation->speed, animation->frame_width,
+                      animation->frame_height);
 }
 
 void Game::Run() {
@@ -76,10 +77,13 @@ void Game::Run() {
 
 void Game::Update(float deltaTime) {
   for (auto &decoration : decorations) {
-    decoration.Update(deltaTime);
-
+    decoration.Update(deltaTime, camera->getPosition());
   }
-  player->Update(deltaTime, &event);
+  player->Update(deltaTime, &event, camera->getPosition());
+
+  map->Update(camera->getPosition());
+
+  camera->Update(player->position);
 }
 
 void Game::ProcessInput() {

@@ -5,6 +5,7 @@
 #ifndef CHOPPERGAME_GAME_H
 #define CHOPPERGAME_GAME_H
 
+#include "../../gameEntities/Camera/Camera.h"
 #include "../../gameEntities/Decoration/Decoration.h"
 #include "../../gameEntities/Map/Map.h"
 #include "../../gameEntities/Player/Player.h"
@@ -17,6 +18,7 @@ private:
   Renderer *renderer;
   Map *map;
   Player *player;
+  Camera *camera;
   SDL_Event event;
   std::vector<Decoration> decorations;
 public:

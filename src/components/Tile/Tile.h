@@ -14,7 +14,10 @@ public:
        int tileScale);
 
   void Render(SDL_Renderer *sdl_renderer, SDL_Texture *texture);
+  void Update(utils::vector &cameraPosition);
 
+private:
+  utils::vector position;
   SDL_Rect sourceRectangle;
   SDL_Rect destinationRectangle;
 };
