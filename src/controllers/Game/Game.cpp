@@ -23,7 +23,9 @@ void Game::CreateGameEntities() {
 
   for (auto &decorationConfig : config.decorations) {
     auto [file, width, height, x, y, scale, animation] = decorationConfig;
+
     std::string decorationPath = basePath + file;
+
     Decoration decoration(renderer->LoadTexture(decorationPath.c_str()),
                           width, height, x, y, scale);
 
@@ -73,8 +75,9 @@ void Game::Run() {
 }
 
 void Game::Update(float deltaTime) {
-  for (auto decoration : decorations) {
+  for (auto &decoration : decorations) {
     decoration.Update(deltaTime);
+
   }
   player->Update(deltaTime, &event);
 }

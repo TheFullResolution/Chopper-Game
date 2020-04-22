@@ -3,13 +3,10 @@
 //
 
 #include "Player.h"
-Player::Player(SDL_Texture *texture, int width, int height, int x,
-               int y, int scale, int animationSpeed, int frameWidth,
-               int frameHeight)
+Player::Player(SDL_Texture *texture, int width, int height, int x, int y,
+               int scale, int animationSpeed, int frameWidth, int frameHeight)
     : Sprite(texture, animationSpeed, frameWidth, frameHeight),
       PositionState(width, height, scale, x, y) {
-
-
 
   Sprite::Initialize(&width, &height, &scale);
 }

@@ -18,8 +18,6 @@ Sprite::Sprite(SDL_Texture *texture, int animationSpeed,
 }
 
 void Sprite::Initialize(const int *width, const int *height, const int *scale) {
-
-
   sourceRectangle.x = 0;
   sourceRectangle.y = 0;
   sourceRectangle.h = *width;
@@ -27,6 +25,8 @@ void Sprite::Initialize(const int *width, const int *height, const int *scale) {
 
   destinationRectangle.w = *width * *scale;
   destinationRectangle.h = *height * *scale;
+  destinationRectangle.x = 0;
+  destinationRectangle.y = 0;
 }
 
 void Sprite::Update(utils::vector *position) {

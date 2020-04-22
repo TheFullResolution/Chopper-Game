@@ -3,8 +3,6 @@
 //
 
 #include "KeyboardControl.h"
-#include "../../_consts.h"
-#include "../../_utils.h"
 #include <SDL_events.h>
 #include <SDL_keycode.h>
 
