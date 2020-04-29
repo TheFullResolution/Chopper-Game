@@ -13,8 +13,7 @@
 
 class Renderer {
 public:
-  Renderer(unsigned int screenWidth, unsigned int screenHeight,
-           std::string title);
+  explicit Renderer(const types::Game& config);
   ~Renderer();
   void Render(Map *map, std::vector<Decoration> *decorations, Player *player);
   void UpdateWindowTitle(unsigned int fps);
@@ -25,6 +24,10 @@ private:
   std::string title;
   SDL_Window *sdl_window;
   SDL_Renderer *sdl_renderer;
+  Uint32 sdl_windowID;
+
+ public:
+  Uint32 getWindowId() const;
 };
 
 #endif // CHOPPERGAME_RENDERER_H

@@ -7,7 +7,6 @@
 
 #include <SDL_render.h>
 #include <string>
-#include "../../consts.h"
 #include "../../types.h"
 class Sprite {
  public:
@@ -17,7 +16,7 @@ class Sprite {
   void Initialize(const int* width, const int* height, const int* scale);
   void Update(types::vector<float>* position,
               types::vector<float>& cameraPosition,
-              const consts::AnimationIndex* animationIndex, const int* height);
+              const types::AnimationIndex* animationIndex, const int* height);
   void Update(types::vector<float>* position,
               types::vector<float>& cameraPosition);
   void Render(SDL_Renderer* sdl_renderer);

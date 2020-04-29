@@ -14,32 +14,32 @@ KeyboardControl::KeyboardControl() {
   shootKey = SDLK_SPACE;
 }
 void KeyboardControl::Update(types::vector<int> *velocity,
-                             consts::AnimationIndex *animationIndex,
+                             types::AnimationIndex *animationIndex,
                              SDL_Event *event) {
   if (event->type == SDL_KEYDOWN) {
     auto keyCode = event->key.keysym.sym;
     if (keyCode == upKey) {
       velocity->y = -60;
       velocity->x = 0;
-      *animationIndex = consts::AnimationIndex::up;
+      *animationIndex = types::AnimationIndex::up;
     }
 
     if (keyCode == downKey) {
       velocity->y = 60;
       velocity->x = 0;
-      *animationIndex = consts::AnimationIndex::down;
+      *animationIndex = types::AnimationIndex::down;
     }
 
     if (keyCode == rightKey) {
       velocity->y = 0;
       velocity->x = 60;
-      *animationIndex = consts::AnimationIndex::right;
+      *animationIndex = types::AnimationIndex::right;
     }
 
     if (keyCode == leftKey) {
       velocity->y = 0;
       velocity->x = -60;
-      *animationIndex = consts::AnimationIndex::left;
+      *animationIndex = types::AnimationIndex::left;
     }
   } else if (event->type == SDL_KEYUP) {
     auto keyCode = event->key.keysym.sym;

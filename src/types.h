@@ -5,8 +5,11 @@
 #ifndef types_H
 #define types_H
 
+#include <string>
 #include "../lib/config.h"
 namespace types {
+
+enum AnimationIndex {down, right, left, up};
 
 template <typename T> struct vector{
   T x;
@@ -16,6 +19,8 @@ template <typename T> struct vector{
 using Decoration = config::Player;
 using Player = config::Player;
 using Map = config::Map;
+using Game = config::Game;
+using Config = config::Config;
 
 } // namespace types
 #endif

@@ -1,13 +1,15 @@
-#include "./consts.h"
+#include <fstream>
 #include "controllers/Game/Game.h"
 #include "controllers/Renderer/Renderer.h"
-#include <iostream>
 
 int main() {
-  auto *renderer =
-      new Renderer(consts::WINDOW_WIDTH, consts::WINDOW_HEIGHT, consts::title);
+  std::ifstream config_json("assets/config.json");
 
-  auto *game = new Game(renderer);
+  config::Config config = nlohmann::json::parse(config_json);
+
+  auto* renderer = new Renderer(config.game);
+
+  auto* game = new Game(renderer, &config);
   game->CreateGameEntities();
   game->Run();
 

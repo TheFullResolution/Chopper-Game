@@ -4,7 +4,6 @@
 
 #include "Sprite.h"
 #include <SDL_timer.h>
-#include "../../consts.h"
 
 Sprite::Sprite(SDL_Texture* texture)
     : texture(texture),
@@ -48,7 +47,7 @@ void Sprite::Update(types::vector<float>* position,
 
 void Sprite::Update(types::vector<float>* position,
                     types::vector<float>& cameraPosition,
-                    const consts::AnimationIndex* animationIndex,
+                    const types::AnimationIndex* animationIndex,
                     const int* height) {
   if (isAnimated) {
     sourceRectangle.x =

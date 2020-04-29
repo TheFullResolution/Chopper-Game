@@ -1,6 +1,12 @@
 {
   "assetsPath":"assets/",
   "spritePath":"images/",
+  "game": {
+    "initialWindowWidth": 800,
+    "initialWindowHeight": 600,
+    "fps": 60,
+    "title": "Chopper Game"
+  },
   "map":{
     "mapImageFile":"assets/map/jungle.png",
     "mapLayoutFile":"assets/map/jungle.map",

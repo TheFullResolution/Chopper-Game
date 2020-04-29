@@ -12,11 +12,11 @@ class Camera {
   void Update(const types::vector<float>& playerPosition);
 
   types::vector<float>& getPosition();
+  void setDimensions(float width, float height);
 
  private:
   types::vector<float> position;
-  float width;
-  float height;
+  types::vector<float> dimensions;
 };
 
 #endif  // CHOPPERGAME_CAMERA_H

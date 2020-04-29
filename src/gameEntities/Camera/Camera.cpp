@@ -6,17 +6,22 @@
 
 types::vector<float>& Camera::getPosition() { return position; }
 
-Camera::Camera(float x, float y, float width, float height)
-    : width(width), height(height) {
+Camera::Camera(float x, float y, float width, float height) {
   position.x = x;
   position.y = y;
+  dimensions.x = width;
+  dimensions.y = height;
 }
 void Camera::Update(const types::vector<float>& playerPosition) {
-  position.x = playerPosition.x - (width / 2);
-  position.y = playerPosition.y - (height / 2);
+  position.x = playerPosition.x - (dimensions.x / 2);
+  position.y = playerPosition.y - (dimensions.y / 2);
 
   position.x = position.x < 0 ? 0 : position.x;
   position.y = position.y < 0 ? 0 : position.y;
-  position.x = position.x > width ? width : position.x;
-  position.y = position.y > height ? height : position.y;
+  position.x = position.x > dimensions.x ? dimensions.x : position.x;
+  position.y = position.y > dimensions.y ? dimensions.y : position.y;
+}
+void Camera::setDimensions(float width, float height) {
+  Camera::dimensions.x = width;
+  Camera::dimensions.y = height;
 }

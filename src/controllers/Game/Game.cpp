@@ -2,24 +2,23 @@
 // Created by Jedrzej Lewandowski on 20/11/2019.
 //
 #include "./Game.h"
-#include <boost/property_tree/json_parser.hpp>
-#include "../../../lib/config.h"
 
-Game::Game(Renderer* renderer) : renderer(renderer) { isRunning = false; }
+Game::Game(Renderer* renderer, types::Config* config)
+    : renderer(renderer), config(config) {
+  isRunning = false;
+  frame_target_time = static_cast<float>(1000.0 / config->game.fps);
+}
 
 void Game::CreateGameEntities() {
-  camera = new Camera(0, 0, consts::WINDOW_WIDTH, consts::WINDOW_HEIGHT);
+  camera = new Camera(0, 0, config->game.initial_window_width,
+                      config->game.initial_window_height);
 
-  std::ifstream config_json("assets/config.json");
+  map = new Map(renderer->LoadTexture(config->map.map_image_file.c_str()),
+                config->map);
 
-  config::Config config = nlohmann::json::parse(config_json);
+  std::string basePath = config->assets_path + config->sprite_path;
 
-  map = new Map(renderer->LoadTexture(config.map.map_image_file.c_str()),
-                config.map);
-
-  std::string basePath = config.assets_path + config.sprite_path;
-
-  for (auto& decorationConfig : config.decorations) {
+  for (auto& decorationConfig : config->decorations) {
     std::string decorationPath = basePath + decorationConfig.file;
 
     Decoration decoration(renderer->LoadTexture(decorationPath.c_str()),
@@ -28,8 +27,9 @@ void Game::CreateGameEntities() {
     decorations.emplace_back(decoration);
   }
 
-  std::string playerPath = basePath + config.player.file;
-  player = new Player(renderer->LoadTexture(playerPath.c_str()), config.player);
+  std::string playerPath = basePath + config->player.file;
+  player =
+      new Player(renderer->LoadTexture(playerPath.c_str()), config->player);
 }
 
 void Game::Run() {
@@ -44,7 +44,7 @@ void Game::Run() {
   while (isRunning) {
     frame_start = SDL_GetTicks();
 
-    float deltaTime = (frame_start - frame_end) / 1000.0f;
+    float deltaTime = static_cast<float>((frame_start - frame_end)) / 1000.0f;
     deltaTime = (deltaTime > 0.05f) ? 0.05f : deltaTime;
 
     ProcessInput();
@@ -61,8 +61,8 @@ void Game::Run() {
       title_timestamp = frame_end;
     }
 
-    if (frame_duration < consts::FRAME_TARGET_TIME) {
-      SDL_Delay(consts::FRAME_TARGET_TIME - frame_duration);
+    if (frame_duration < frame_target_time) {
+      SDL_Delay(frame_target_time - frame_duration);
     }
   }
 }
@@ -86,6 +86,19 @@ void Game::ProcessInput() {
       isRunning = false;
       break;
     }
+
+    case SDL_WINDOWEVENT: {
+      if (event.window.windowID == renderer->getWindowId()) {
+        switch (event.window.event) {
+          case SDL_WINDOWEVENT_SIZE_CHANGED: {
+            camera->setDimensions(event.window.data1, event.window.data2);
+            break;
+          }
+        }
+      }
+      break;
+    }
+
     case SDL_KEYDOWN: {
       if (event.key.keysym.sym == SDLK_ESCAPE) {
         isRunning = false;

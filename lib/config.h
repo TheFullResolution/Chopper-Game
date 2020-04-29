@@ -70,6 +70,13 @@ namespace config {
         std::shared_ptr<Animation> animation;
     };
 
+    struct Game {
+        int64_t initial_window_width;
+        int64_t initial_window_height;
+        int64_t fps;
+        std::string title;
+    };
+
     struct Map {
         std::string map_image_file;
         std::string map_layout_file;
@@ -82,6 +89,7 @@ namespace config {
     struct Config {
         std::string assets_path;
         std::string sprite_path;
+        Game game;
         Map map;
         Player player;
         std::vector<Player> decorations;
@@ -94,6 +102,9 @@ namespace nlohmann {
 
     void from_json(const json & j, config::Player & x);
     void to_json(json & j, const config::Player & x);
+
+    void from_json(const json & j, config::Game & x);
+    void to_json(json & j, const config::Game & x);
 
     void from_json(const json & j, config::Map & x);
     void to_json(json & j, const config::Map & x);
@@ -135,6 +146,21 @@ namespace nlohmann {
         j["animation"] = x.animation;
     }
 
+    inline void from_json(const json & j, config::Game& x) {
+        x.initial_window_width = j.at("initialWindowWidth").get<int64_t>();
+        x.initial_window_height = j.at("initialWindowHeight").get<int64_t>();
+        x.fps = j.at("fps").get<int64_t>();
+        x.title = j.at("title").get<std::string>();
+    }
+
+    inline void to_json(json & j, const config::Game & x) {
+        j = json::object();
+        j["initialWindowWidth"] = x.initial_window_width;
+        j["initialWindowHeight"] = x.initial_window_height;
+        j["fps"] = x.fps;
+        j["title"] = x.title;
+    }
+
     inline void from_json(const json & j, config::Map& x) {
         x.map_image_file = j.at("mapImageFile").get<std::string>();
         x.map_layout_file = j.at("mapLayoutFile").get<std::string>();
@@ -157,6 +183,7 @@ namespace nlohmann {
     inline void from_json(const json & j, config::Config& x) {
         x.assets_path = j.at("assetsPath").get<std::string>();
         x.sprite_path = j.at("spritePath").get<std::string>();
+        x.game = j.at("game").get<config::Game>();
         x.map = j.at("map").get<config::Map>();
         x.player = j.at("player").get<config::Player>();
         x.decorations = j.at("decorations").get<std::vector<config::Player>>();
@@ -166,6 +193,7 @@ namespace nlohmann {
         j = json::object();
         j["assetsPath"] = x.assets_path;
         j["spritePath"] = x.sprite_path;
+        j["game"] = x.game;
         j["map"] = x.map;
         j["player"] = x.player;
         j["decorations"] = x.decorations;

@@ -3,13 +3,11 @@
 //
 
 #include "Renderer.h"
-
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <iostream>
 
-Renderer::Renderer(unsigned int screenWidth, unsigned int screenHeight,
-                   std::string title): title(title) {
+Renderer::Renderer(const types::Game& config) : title(config.title) {
   if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
     std::cerr << "Error initializing SDL." << std::endl;
     return;
@@ -19,9 +17,13 @@ Renderer::Renderer(unsigned int screenWidth, unsigned int screenHeight,
     return;
   }
 
-  sdl_window = SDL_CreateWindow(title.data(), SDL_WINDOWPOS_UNDEFINED,
-                                SDL_WINDOWPOS_UNDEFINED, screenWidth,
-                                screenHeight, SDL_WINDOW_RESIZABLE);
+  sdl_window =
+      SDL_CreateWindow(title.data(), SDL_WINDOWPOS_UNDEFINED,
+                       SDL_WINDOWPOS_UNDEFINED, config.initial_window_width,
+                       config.initial_window_height, SDL_WINDOW_RESIZABLE);
+
+  sdl_windowID = SDL_GetWindowID(sdl_window);
+
   if (nullptr == sdl_window) {
     std::cerr << "Error creating SDL window." << std::endl;
     return;
@@ -35,8 +37,6 @@ Renderer::Renderer(unsigned int screenWidth, unsigned int screenHeight,
   }
 }
 
-
-
 void Renderer::UpdateWindowTitle(unsigned int fps) {
   std::string newTitle{title + "; FPS: " + std::to_string(fps)};
   SDL_SetWindowTitle(sdl_window, newTitle.data());
@@ -47,13 +47,13 @@ Renderer::~Renderer() {
   SDL_Quit();
 }
 
-void Renderer::Render(Map *map, std::vector<Decoration> *decorations,
-                      Player *player) {
+void Renderer::Render(Map* map, std::vector<Decoration>* decorations,
+                      Player* player) {
   SDL_SetRenderDrawColor(sdl_renderer, 158, 200, 92, 255);
   SDL_RenderClear(sdl_renderer);
   map->Render(sdl_renderer);
 
-  for (auto &decoration : *decorations) {
+  for (auto& decoration : *decorations) {
     decoration.Render(sdl_renderer);
   }
   player->Render(sdl_renderer);
@@ -61,9 +61,11 @@ void Renderer::Render(Map *map, std::vector<Decoration> *decorations,
   SDL_RenderPresent(sdl_renderer);
 }
 
-SDL_Texture *Renderer::LoadTexture(const char *filename) {
-  SDL_Surface *surface = IMG_Load(filename);
-  SDL_Texture *texture = SDL_CreateTextureFromSurface(sdl_renderer, surface);
+SDL_Texture* Renderer::LoadTexture(const char* filename) {
+  SDL_Surface* surface = IMG_Load(filename);
+  SDL_Texture* texture = SDL_CreateTextureFromSurface(sdl_renderer, surface);
   SDL_FreeSurface(surface);
   return texture;
 }
+
+Uint32 Renderer::getWindowId() const { return sdl_windowID; }

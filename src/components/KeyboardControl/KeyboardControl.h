@@ -5,15 +5,14 @@
 #ifndef CHOPPERGAME_KEYBOARDCONTROL_H
 #define CHOPPERGAME_KEYBOARDCONTROL_H
 
-#include "../../consts.h"
-#include "../../types.h"
 #include <SDL_events.h>
 #include <SDL_keycode.h>
+#include "../../types.h"
 
 class KeyboardControl {
 public:
   KeyboardControl();
-  void Update(types::vector<int> *velocity, consts::AnimationIndex *animationIndex,
+  void Update(types::vector<int> *velocity, types::AnimationIndex *animationIndex,
               SDL_Event *event);
 
 private:
