@@ -10,6 +10,8 @@ Map::Map(SDL_Texture* texture, const types::Map& mapConfig) {
   Map::scale = mapConfig.scale;
   Map::tileSize = mapConfig.tile_size;
   Map::texture = texture;
+  Map::dimensions.x = scale * tileSize * mapConfig.map_size_x;
+  Map::dimensions.y = scale * tileSize * mapConfig.map_size_y;
 
   std::fstream mapFile;
   mapFile.open(mapConfig.map_layout_file);
@@ -46,3 +48,4 @@ void Map::Render(SDL_Renderer* sdl_renderer) {
     tile->Render(sdl_renderer, texture);
   }
 }
+const types::vector<float>& Map::getDimensions() const { return dimensions; }

@@ -15,7 +15,8 @@ class Player : public Sprite, public PositionState, public KeyboardControl {
   Player(SDL_Texture* texture, const types::Player& config);
 
   void Update(float deltaTime, SDL_Event* event,
-              types::vector<float>& cameraPosition);
+              types::vector<float>& cameraPosition,
+              const types::vector<float>& mapDimensions);
 };
 
 #endif  // CHOPPERGAME_PLAYER_H

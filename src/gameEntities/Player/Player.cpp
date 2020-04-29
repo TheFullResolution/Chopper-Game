@@ -12,8 +12,8 @@ Player::Player(SDL_Texture* texture, const types::Player& config)
 }
 
 void Player::Update(float deltaTime, SDL_Event* event,
-                    types::vector<float>& cameraPosition) {
+                    types::vector<float>& cameraPosition, const types::vector<float>& mapDimensions) {
   KeyboardControl::Update(&velocity, &animationIndex, event);
-  PositionState::Update(deltaTime);
+  PositionState::Update(deltaTime, mapDimensions);
   Sprite::Update(&position, cameraPosition, &animationIndex, &height);
 }

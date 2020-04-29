@@ -8,10 +8,10 @@
 #include "../../types.h"
 
 class PositionState {
-public:
-  PositionState(int width, int height, int scale,  int x,
-                int y);
+ public:
+  PositionState(int width, int height, int scale, int x, int y);
   void Update(float deltaTime);
+  void Update(float deltaTime, types::vector<float> mapDimensions);
   types::vector<int> velocity;
   types::vector<float> position;
   types::AnimationIndex animationIndex;
@@ -20,4 +20,4 @@ public:
   int scale;
 };
 
-#endif // CHOPPERGAME_POSITIONSTATE_H
+#endif  // CHOPPERGAME_POSITIONSTATE_H

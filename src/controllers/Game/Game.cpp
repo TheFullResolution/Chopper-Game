@@ -71,11 +71,11 @@ void Game::Update(float deltaTime) {
   for (auto& decoration : decorations) {
     decoration.Update(deltaTime, camera->getPosition());
   }
-  player->Update(deltaTime, &event, camera->getPosition());
+  player->Update(deltaTime, &event, camera->getPosition(), map->getDimensions());
 
   map->Update(camera->getPosition());
 
-  camera->Update(player->position);
+  camera->Update(player->position, map->getDimensions());
 }
 
 void Game::ProcessInput() {

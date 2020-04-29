@@ -9,7 +9,7 @@
 class Camera {
  public:
   Camera(float x, float y, float width, float height);
-  void Update(const types::vector<float>& playerPosition);
+  void Update(const types::vector<float>& playerPosition, const types::vector<float>& mapDimensions);
 
   types::vector<float>& getPosition();
   void setDimensions(float width, float height);
@@ -17,6 +17,7 @@ class Camera {
  private:
   types::vector<float> position;
   types::vector<float> dimensions;
+
 };
 
 #endif  // CHOPPERGAME_CAMERA_H

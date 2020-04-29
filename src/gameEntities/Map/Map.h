@@ -22,6 +22,10 @@ class Map {
   std::vector<Tile*> tiles;
   int scale;
   int tileSize;
+  types::vector<float> dimensions;
+
+ public:
+  const types::vector<float>& getDimensions() const;
 };
 
 #endif  // CHOPPERGAME_MAP_H
