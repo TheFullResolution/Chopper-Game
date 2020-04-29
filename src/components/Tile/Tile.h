@@ -5,21 +5,21 @@
 #ifndef CHOPPERGAME_TILE_H
 #define CHOPPERGAME_TILE_H
 
-#include "../../_utils.h"
 #include <SDL_render.h>
+#include "../../types.h"
 
 class Tile {
-public:
+ public:
   Tile(int sourceRectX, int sourceRectY, int x, int y, int tileSize,
        int tileScale);
 
-  void Render(SDL_Renderer *sdl_renderer, SDL_Texture *texture);
-  void Update(utils::vector &cameraPosition);
+  void Render(SDL_Renderer* sdl_renderer, SDL_Texture* texture);
+  void Update(types::vector<float>& cameraPosition);
 
-private:
-  utils::vector position;
+ private:
+  types::vector<int> position;
   SDL_Rect sourceRectangle;
   SDL_Rect destinationRectangle;
 };
 
-#endif // CHOPPERGAME_TILE_H
+#endif  // CHOPPERGAME_TILE_H

@@ -10,10 +10,9 @@
 
 class Decoration : public Sprite, public PositionState {
 public:
-  Decoration(SDL_Texture *texture, int width, int height, int x,
-             int y, int scale);
+  Decoration(SDL_Texture *texture, const types::Decoration& config);
 
-  void Update(float deltaTime, utils::vector &cameraPosition);
+  void Update(float deltaTime, types::vector<float> &cameraPosition);
 };
 
 #endif // CHOPPERGAME_DECORATION_H

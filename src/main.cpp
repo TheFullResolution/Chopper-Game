@@ -1,4 +1,4 @@
-#include "./_consts.h"
+#include "./consts.h"
 #include "controllers/Game/Game.h"
 #include "controllers/Renderer/Renderer.h"
 #include <iostream>

@@ -3,13 +3,14 @@
 //
 
 #include "Decoration.h"
-Decoration::Decoration(SDL_Texture *texture, int width, int height,
-                       int x, int y, int scale)
-    : Sprite(texture), PositionState(width, height, scale, x, y) {
+Decoration::Decoration(SDL_Texture* texture, const types::Decoration& config)
+    : Sprite(texture),
+      PositionState(config.width, config.height, config.scale, config.x,
+                    config.y) {
   Sprite::Initialize(&width, &height, &scale);
 }
 
-void Decoration::Update(float deltaTime, utils::vector &cameraPosition) {
+void Decoration::Update(float deltaTime, types::vector<float>& cameraPosition) {
   PositionState::Update(deltaTime);
   Sprite::Update(&position, cameraPosition);
 }

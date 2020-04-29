@@ -3,15 +3,16 @@
 //
 
 #include "Player.h"
-Player::Player(SDL_Texture *texture, int width, int height, int x, int y,
-               int scale, int animationSpeed, int frameWidth, int frameHeight)
-    : Sprite(texture, animationSpeed, frameWidth, frameHeight),
-      PositionState(width, height, scale, x, y) {
-
+Player::Player(SDL_Texture* texture, const types::Player& config)
+    : Sprite(texture, config.animation->speed, config.animation->frame_width,
+             config.animation->frame_height),
+      PositionState(config.width, config.height, config.scale, config.x,
+                    config.y) {
   Sprite::Initialize(&width, &height, &scale);
 }
 
-void Player::Update(float deltaTime, SDL_Event *event, utils::vector &cameraPosition) {
+void Player::Update(float deltaTime, SDL_Event* event,
+                    types::vector<float>& cameraPosition) {
   KeyboardControl::Update(&velocity, &animationIndex, event);
   PositionState::Update(deltaTime);
   Sprite::Update(&position, cameraPosition, &animationIndex, &height);

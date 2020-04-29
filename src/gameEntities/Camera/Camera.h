@@ -5,17 +5,18 @@
 #ifndef CHOPPERGAME_CAMERA_H
 #define CHOPPERGAME_CAMERA_H
 
-#include "../../_utils.h"
+#include "../../types.h"
 class Camera {
-public:
+ public:
   Camera(float x, float y, float width, float height);
-  void Update(const utils::vector &playerPosition);
+  void Update(const types::vector<float>& playerPosition);
 
-  utils::vector &getPosition();
-private:
-  utils::vector position;
+  types::vector<float>& getPosition();
+
+ private:
+  types::vector<float> position;
   float width;
   float height;
 };
 
-#endif // CHOPPERGAME_CAMERA_H
+#endif  // CHOPPERGAME_CAMERA_H

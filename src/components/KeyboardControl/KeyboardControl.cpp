@@ -13,7 +13,7 @@ KeyboardControl::KeyboardControl() {
   leftKey = SDLK_LEFT;
   shootKey = SDLK_SPACE;
 }
-void KeyboardControl::Update(utils::vector *velocity,
+void KeyboardControl::Update(types::vector<int> *velocity,
                              consts::AnimationIndex *animationIndex,
                              SDL_Event *event) {
   if (event->type == SDL_KEYDOWN) {

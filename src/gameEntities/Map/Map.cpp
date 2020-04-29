@@ -6,19 +6,16 @@
 #include <fstream>
 #include <iostream>
 
-Map::Map(SDL_Texture *texture, const std::string &mapLayoutFile, int scale,
-         int tileSize, int mapSizeX, int mapSizeY)
-    : texture(texture), scale(scale), tileSize(tileSize) {
+Map::Map(SDL_Texture* texture, const types::Map& mapConfig) {
+  Map::scale = mapConfig.scale;
+  Map::tileSize = mapConfig.tile_size;
+  Map::texture = texture;
 
-  LoadMap(mapLayoutFile, mapSizeX, mapSizeY);
-}
-
-void Map::LoadMap(const std::string &filePath, int mapSizeX, int mapSizeY) {
   std::fstream mapFile;
-  mapFile.open(filePath);
+  mapFile.open(mapConfig.map_layout_file);
 
-  for (int y = 0; y < mapSizeY; y++) {
-    for (int x = 0; x < mapSizeX; x++) {
+  for (int y = 0; y < mapConfig.map_size_y; y++) {
+    for (int x = 0; x < mapConfig.map_size_x; x++) {
       char ch;
       mapFile.get(ch);
       int sourceRectY = atoi(&ch) * tileSize;
@@ -38,14 +35,14 @@ void Map::AddTile(int sourceRectX, int sourceRectY, int x, int y) {
   tiles.emplace_back(new Tile(sourceRectX, sourceRectY, x, y, tileSize, scale));
 }
 
-void Map::Update(utils::vector &cameraPosition) {
-  for (auto &tile : tiles) {
+void Map::Update(types::vector<float>& cameraPosition) {
+  for (auto& tile : tiles) {
     tile->Update(cameraPosition);
   }
 }
 
-void Map::Render(SDL_Renderer *sdl_renderer) {
-  for (auto &tile : tiles) {
+void Map::Render(SDL_Renderer* sdl_renderer) {
+  for (auto& tile : tiles) {
     tile->Render(sdl_renderer, texture);
   }
 }

@@ -3,15 +3,15 @@
 //
 
 #include "PositionState.h"
-PositionState::PositionState(int width, int height, int scale, int x, int y): width(width), height(height), scale(scale) {
-        position.x = static_cast<float>(x);
-        position.y = static_cast<float>(y);
-        velocity.x = 0;
-        velocity.y = 0;
-        animationIndex = consts::AnimationIndex::down;
-
+PositionState::PositionState(int width, int height, int scale, int x, int y)
+    : width(width), height(height), scale(scale) {
+  position.x = x;
+  position.y = y;
+  velocity.x = 0;
+  velocity.y = 0;
+  animationIndex = consts::AnimationIndex::down;
 }
-void PositionState::Update(float deltaTime){
-    position.x += velocity.x * deltaTime;
-    position.y += velocity.y * deltaTime;
+void PositionState::Update(float deltaTime) {
+  position.x += velocity.x * deltaTime;
+  position.y += velocity.y * deltaTime;
 }

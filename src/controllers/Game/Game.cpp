@@ -2,10 +2,10 @@
 // Created by Jedrzej Lewandowski on 20/11/2019.
 //
 #include "./Game.h"
-#include "../../../lib/config.h"
 #include <boost/property_tree/json_parser.hpp>
+#include "../../../lib/config.h"
 
-Game::Game(Renderer *renderer) : renderer(renderer) { isRunning = false; }
+Game::Game(Renderer* renderer) : renderer(renderer) { isRunning = false; }
 
 void Game::CreateGameEntities() {
   camera = new Camera(0, 0, consts::WINDOW_WIDTH, consts::WINDOW_HEIGHT);
@@ -14,30 +14,22 @@ void Game::CreateGameEntities() {
 
   config::Config config = nlohmann::json::parse(config_json);
 
-  auto [map_image_file, map_layout_file, map_scale, tile_size, map_size_x,
-        map_size_y] = config.map;
-
-  map = new Map(renderer->LoadTexture(map_image_file.c_str()), map_layout_file,
-                map_scale, tile_size, map_size_x, map_size_y);
+  map = new Map(renderer->LoadTexture(config.map.map_image_file.c_str()),
+                config.map);
 
   std::string basePath = config.assets_path + config.sprite_path;
 
-  for (auto &decorationConfig : config.decorations) {
-    auto [file, width, height, x, y, scale, animation] = decorationConfig;
+  for (auto& decorationConfig : config.decorations) {
+    std::string decorationPath = basePath + decorationConfig.file;
 
-    std::string decorationPath = basePath + file;
-
-    Decoration decoration(renderer->LoadTexture(decorationPath.c_str()), width,
-                          height, x, y, scale);
+    Decoration decoration(renderer->LoadTexture(decorationPath.c_str()),
+                          decorationConfig);
 
     decorations.emplace_back(decoration);
   }
 
-  auto [file, width, height, x, y, scale, animation] = config.player;
-  std::string playerPath = basePath + file;
-  player = new Player(renderer->LoadTexture(playerPath.c_str()), width, height,
-                      x, y, scale, animation->speed, animation->frame_width,
-                      animation->frame_height);
+  std::string playerPath = basePath + config.player.file;
+  player = new Player(renderer->LoadTexture(playerPath.c_str()), config.player);
 }
 
 void Game::Run() {
@@ -76,7 +68,7 @@ void Game::Run() {
 }
 
 void Game::Update(float deltaTime) {
-  for (auto &decoration : decorations) {
+  for (auto& decoration : decorations) {
     decoration.Update(deltaTime, camera->getPosition());
   }
   player->Update(deltaTime, &event, camera->getPosition());
@@ -87,22 +79,21 @@ void Game::Update(float deltaTime) {
 }
 
 void Game::ProcessInput() {
-
   SDL_PollEvent(&event);
 
   switch (event.type) {
-  case SDL_QUIT: {
-    isRunning = false;
-    break;
-  }
-  case SDL_KEYDOWN: {
-    if (event.key.keysym.sym == SDLK_ESCAPE) {
+    case SDL_QUIT: {
       isRunning = false;
+      break;
     }
-    break;
-  }
-  default: {
-    break;
-  }
+    case SDL_KEYDOWN: {
+      if (event.key.keysym.sym == SDLK_ESCAPE) {
+        isRunning = false;
+      }
+      break;
+    }
+    default: {
+      break;
+    }
   }
 }
