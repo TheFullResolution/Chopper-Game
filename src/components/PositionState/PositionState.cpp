@@ -12,10 +12,12 @@ PositionState::PositionState(int width, int height, int scale, int x, int y)
   velocity.y = 0;
   animationIndex = types::AnimationIndex::down;
 }
+
 void PositionState::Update(float deltaTime) {
   position.x += velocity.x * deltaTime;
   position.y += velocity.y * deltaTime;
 }
+
 void PositionState::Update(float deltaTime,
                            types::vector<float> mapDimensions) {
   position.x += velocity.x * deltaTime;
@@ -27,8 +29,6 @@ void PositionState::Update(float deltaTime,
   float mapLimitX = mapDimensions.x - static_cast<float>(width);
   float mapLimitY = mapDimensions.y - static_cast<float>(height);
 
-  position.x =
-      position.x >mapLimitX ? mapLimitX : position.x;
-  position.y =
-      position.y > mapLimitY ? mapLimitY : position.y;
+  position.x = position.x > mapLimitX ? mapLimitX : position.x;
+  position.y = position.y > mapLimitY ? mapLimitY : position.y;
 }

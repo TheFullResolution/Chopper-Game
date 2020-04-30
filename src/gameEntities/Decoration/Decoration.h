@@ -9,10 +9,10 @@
 #include "../../components/Sprite/Sprite.h"
 
 class Decoration : public Sprite, public PositionState {
-public:
-  Decoration(SDL_Texture *texture, const types::Decoration& config);
+ public:
+  Decoration(SDL_Texture* texture, const types::Decoration& config);
 
-  void Update(float deltaTime, types::vector<float> &cameraPosition);
+  void Update(float deltaTime, types::vector<float>& cameraPosition);
 };
 
-#endif // CHOPPERGAME_DECORATION_H
+#endif  // CHOPPERGAME_DECORATION_H

@@ -12,8 +12,8 @@ class PositionState {
   PositionState(int width, int height, int scale, int x, int y);
   void Update(float deltaTime);
   void Update(float deltaTime, types::vector<float> mapDimensions);
-  types::vector<int> velocity;
-  types::vector<float> position;
+  types::vector<int> velocity{};
+  types::vector<float> position{};
   types::AnimationIndex animationIndex;
   int width;
   int height;

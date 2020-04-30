@@ -12,7 +12,9 @@ Camera::Camera(float x, float y, float width, float height) {
   dimensions.x = width;
   dimensions.y = height;
 }
-void Camera::Update(const types::vector<float>& playerPosition, const types::vector<float>& mapDimensions) {
+
+void Camera::Update(const types::vector<float>& playerPosition,
+                    const types::vector<float>& mapDimensions) {
   position.x = playerPosition.x - (dimensions.x / 2);
   position.y = playerPosition.y - (dimensions.y / 2);
 
@@ -25,6 +27,7 @@ void Camera::Update(const types::vector<float>& playerPosition, const types::vec
   position.x = position.x > mapLimitX ? mapLimitX : position.x;
   position.y = position.y > mapLimitY ? mapLimitY : position.y;
 }
+
 void Camera::setDimensions(float width, float height) {
   Camera::dimensions.x = width;
   Camera::dimensions.y = height;

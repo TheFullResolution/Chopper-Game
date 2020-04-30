@@ -10,12 +10,12 @@
 #include "../../types.h"
 
 class KeyboardControl {
-public:
+ public:
   KeyboardControl();
-  void Update(types::vector<int> *velocity, types::AnimationIndex *animationIndex,
-              SDL_Event *event);
+  void Update(types::vector<int>* velocity,
+              types::AnimationIndex* animationIndex, SDL_Event* event);
 
-private:
+ private:
   SDL_Keycode upKey;
   SDL_Keycode downKey;
   SDL_Keycode rightKey;
@@ -23,4 +23,4 @@ private:
   SDL_Keycode shootKey;
 };
 
-#endif // CHOPPERGAME_KEYBOARDCONTROL_H
+#endif  // CHOPPERGAME_KEYBOARDCONTROL_H

@@ -41,8 +41,10 @@ void Sprite::Update(types::vector<float>* position,
         sourceRectangle.w *
         static_cast<int>((SDL_GetTicks() / animationSpeed) % frameWidth);
   }
-  destinationRectangle.x = static_cast<int>(position->x - (isFixed ? 0 : cameraPosition.x));
-  destinationRectangle.y = static_cast<int>(position->y - (isFixed ? 0 : cameraPosition.y));
+  destinationRectangle.x =
+      static_cast<int>(position->x - (isFixed ? 0 : cameraPosition.x));
+  destinationRectangle.y =
+      static_cast<int>(position->y - (isFixed ? 0 : cameraPosition.y));
 }
 
 void Sprite::Update(types::vector<float>* position,
@@ -55,8 +57,10 @@ void Sprite::Update(types::vector<float>* position,
         static_cast<int>((SDL_GetTicks() / animationSpeed) % frameWidth);
   }
   sourceRectangle.y = *animationIndex * *height;
-  destinationRectangle.x = static_cast<int>(position->x - (isFixed ? 0 : cameraPosition.x));
-  destinationRectangle.y = static_cast<int>(position->y - (isFixed ? 0 : cameraPosition.y));
+  destinationRectangle.x =
+      static_cast<int>(position->x - (isFixed ? 0 : cameraPosition.x));
+  destinationRectangle.y =
+      static_cast<int>(position->y - (isFixed ? 0 : cameraPosition.y));
 }
 
 void Sprite::Render(SDL_Renderer* sdl_renderer) {

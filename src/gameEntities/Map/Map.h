@@ -10,11 +10,6 @@
 #include "../../components/Tile/Tile.h"
 
 class Map {
- public:
-  Map(SDL_Texture* texture, const types::Map& mapConfig);
-  void Render(SDL_Renderer* sdl_renderer);
-  void Update(types::vector<float>& cameraPosition);
-
  private:
   void AddTile(int sourceX, int sourceY, int x, int y);
 
@@ -22,9 +17,12 @@ class Map {
   std::vector<Tile*> tiles;
   int scale;
   int tileSize;
-  types::vector<float> dimensions;
+  types::vector<float> dimensions{};
 
  public:
+  Map(SDL_Texture* texture, const types::Map& mapConfig);
+  void Render(SDL_Renderer* sdl_renderer);
+  void Update(types::vector<float>& cameraPosition);
   const types::vector<float>& getDimensions() const;
 };
 

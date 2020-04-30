@@ -9,9 +9,10 @@
 #include "../lib/config.h"
 namespace types {
 
-enum AnimationIndex {down, right, left, up};
+enum AnimationIndex { down, right, left, up };
 
-template <typename T> struct vector{
+template <typename T>
+struct vector {
   T x;
   T y;
 };
@@ -22,5 +23,5 @@ using Map = config::Map;
 using Game = config::Game;
 using Config = config::Config;
 
-} // namespace types
+}  // namespace types
 #endif

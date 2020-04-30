@@ -5,7 +5,6 @@
   "scripts": {
     "quicktype": "quicktype",
     "update:json": "quicktype assets/config.json --src-lang json --lang cpp --top-level Config --namespace config --out lib/config.h --include-location global-include --code-format with-struct "
-
   },
   "repository": {
     "type": "git",
@@ -18,6 +17,6 @@
   },
   "homepage": "https://github.com/TheFullResolution/Chopper-Game#readme",
   "devDependencies": {
-    "quicktype": "15.0.212"
+    "quicktype": "15.0.223"
   }
 }

@@ -48,4 +48,5 @@ void Map::Render(SDL_Renderer* sdl_renderer) {
     tile->Render(sdl_renderer, texture);
   }
 }
+
 const types::vector<float>& Map::getDimensions() const { return dimensions; }

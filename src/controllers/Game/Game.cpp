@@ -71,7 +71,8 @@ void Game::Update(float deltaTime) {
   for (auto& decoration : decorations) {
     decoration.Update(deltaTime, camera->getPosition());
   }
-  player->Update(deltaTime, &event, camera->getPosition(), map->getDimensions());
+  player->Update(deltaTime, &event, camera->getPosition(),
+                 map->getDimensions());
 
   map->Update(camera->getPosition());
 

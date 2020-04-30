@@ -9,6 +9,16 @@
 #include <string>
 #include "../../types.h"
 class Sprite {
+ private:
+  SDL_Texture* texture;
+  bool isFixed;
+  bool isAnimated;
+  int animationSpeed;
+  int frameWidth;
+  int frameHeight;
+  SDL_Rect sourceRectangle{};
+  SDL_Rect destinationRectangle{};
+
  public:
   explicit Sprite(SDL_Texture* texture);
   Sprite(SDL_Texture* texture, int animationSpeed, int frameWidth,
@@ -20,16 +30,6 @@ class Sprite {
   void Update(types::vector<float>* position,
               types::vector<float>& cameraPosition);
   void Render(SDL_Renderer* sdl_renderer);
-
- private:
-  SDL_Texture* texture;
-  bool isFixed;
-  bool isAnimated;
-  int animationSpeed;
-  int frameWidth;
-  int frameHeight;
-  SDL_Rect sourceRectangle;
-  SDL_Rect destinationRectangle;
 };
 
 #endif  // CHOPPERGAME_SPRITE_H
