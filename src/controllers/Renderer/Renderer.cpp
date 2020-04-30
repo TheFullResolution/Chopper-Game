@@ -49,7 +49,7 @@ Renderer::~Renderer() {
 
 void Renderer::Render(Map* map, std::vector<Decoration>* decorations,
                       Player* player) {
-  SDL_SetRenderDrawColor(sdl_renderer, 158, 200, 92, 255);
+  SDL_SetRenderDrawColor(sdl_renderer, 0, 0, 0, 255);
   SDL_RenderClear(sdl_renderer);
   map->Render(sdl_renderer);
 
