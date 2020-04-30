@@ -1,13 +1,32 @@
 {
   "assetsPath":"assets/",
   "spritePath":"images/",
+  "game": {
+    "initialWindowWidth": 800,
+    "initialWindowHeight": 600,
+    "fps": 60,
+    "title": "Chopper Game"
+  },
   "map":{
     "mapImageFile":"assets/map/jungle.png",
     "mapLayoutFile":"assets/map/jungle.map",
-    "scale":1,
+    "scale":2,
     "tileSize":32,
     "mapSizeX":25,
     "mapSizeY":20
+  },
+  "player": {
+    "file":"chopper-spritesheet.png",
+    "width":32,
+    "height":32,
+    "x":240,
+    "y":106,
+    "scale": 1,
+    "animation": {
+      "speed": 90,
+      "frameWidth": 2,
+      "frameHeight": 4
+    }
   },
   "decorations":[
     {
@@ -15,14 +34,16 @@
       "width":16,
       "height":32,
       "x":700,
-      "y":380
+      "y":380,
+      "scale": 1
     },
     {
       "file":"tree-small-4.png",
       "width":16,
       "height":32,
       "x":310,
-      "y":490
+      "y":490,
+      "scale": 1
     }
   ]
 }

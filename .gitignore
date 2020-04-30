@@ -1,12 +1,9 @@
-
 .idea/
-
 build/
-
 bin/
-
 cmake-build-debug/
-
+ *.[oa]
+ *~
 
 ### macOS ###
 # General
@@ -24,3 +21,4 @@ cmake-build-debug/
 .com.apple.timemachine.donotpresent
 
 ChopperGame
+node_modules/

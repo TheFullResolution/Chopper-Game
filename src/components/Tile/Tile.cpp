@@ -3,7 +3,6 @@
 //
 
 #include "Tile.h"
-#include "../TextureManager/TextureManager.h"
 
 Tile::Tile(int sourceRectX, int sourceRectY, int x, int y, int tileSize,
            int tileScale) {
@@ -16,9 +15,17 @@ Tile::Tile(int sourceRectX, int sourceRectY, int x, int y, int tileSize,
   destinationRectangle.y = y;
   destinationRectangle.w = tileScale * tileSize;
   destinationRectangle.h = tileScale * tileSize;
+
+  position.x = static_cast<float>(x);
+  position.y = static_cast<float>(y);
 }
 
-void Tile::Render(SDL_Texture *texture) {
-  TextureManager::Draw(texture, sourceRectangle, destinationRectangle,
-                       SDL_FLIP_NONE);
+void Tile::Update(types::vector<float>& cameraPosition) {
+  destinationRectangle.x = static_cast<int>(position.x - cameraPosition.x);
+  destinationRectangle.y = static_cast<int>(position.y - cameraPosition.y);
+}
+
+void Tile::Render(SDL_Renderer* sdl_renderer, SDL_Texture* texture) {
+  SDL_RenderCopyEx(sdl_renderer, texture, &sourceRectangle,
+                   &destinationRectangle, 0.0, nullptr, SDL_FLIP_NONE);
 }
