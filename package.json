@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "quicktype": "quicktype",
-    "update:json": "quicktype assets/config.json --src-lang json --lang cpp --top-level Config --namespace config --out lib/config.h --include-location global-include --code-format with-struct "
+    "update:json": "quicktype assets/config.json --src-lang json --lang cpp --top-level Config --namespace config --out lib/config.h --include-location global-include --code-format with-struct  --no-boost "
   },
   "repository": {
     "type": "git",
