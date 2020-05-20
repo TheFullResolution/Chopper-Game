@@ -34,7 +34,7 @@ void Game::CreateGameEntities() {
 
 void Game::Run() {
   isRunning = true;
-
+//  emscripten_set_main_loop(gameLoop, 0, 0);
   Uint32 title_timestamp = SDL_GetTicks();
   Uint32 frame_start;
   Uint32 frame_end;

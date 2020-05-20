@@ -5,8 +5,7 @@
 #ifndef CHOPPERGAME_KEYBOARDCONTROL_H
 #define CHOPPERGAME_KEYBOARDCONTROL_H
 
-#include <SDL_events.h>
-#include <SDL_keycode.h>
+#include <SDL.h>
 #include "../../types.h"
 
 class KeyboardControl {

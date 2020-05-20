@@ -22,3 +22,7 @@ cmake-build-debug/
 
 ChopperGame
 node_modules/
+
+public/
+
+third_party/nlohmann_json/

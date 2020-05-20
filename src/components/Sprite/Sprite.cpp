@@ -3,7 +3,7 @@
 //
 
 #include "Sprite.h"
-#include <SDL_timer.h>
+#include <SDL.h>
 
 Sprite::Sprite(SDL_Texture* texture)
     : texture(texture),
